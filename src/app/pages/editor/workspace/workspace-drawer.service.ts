@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { HexColor, IAudioElement, IElement, IGroupElement, IImageElement, ITextElement, IVideoElement } from "../../../domain";
-import { isAudioElement, isGroupElement, isImageElement, isTextElement, isVideoElement } from "../../../utils";
+import { HexColor, IAudioElement, IElement, IGroupElement, IImageElement, IProject, ITextElement, IVideoElement } from "../../../domain";
+import { isAudioElement, isGroupElement, isImageElement, isTextElement, isVideoElement, loadImage } from "../../../utils";
 
 @Injectable()
 export class WorkspaceDrawerService {
@@ -13,22 +13,19 @@ export class WorkspaceDrawerService {
     if (!canvasCtx) {
       throw new Error('Couldn\'t get context from canvas')
     }
-    this.canvas.height = window.innerHeight
-    this.canvas.width = window.innerWidth
     this.canvasCtx = canvasCtx
   }
 
-  drawProjectBackground(color: HexColor): void {
-    if (!this.canvasCtx || !this.canvas) {
-      throw new Error('Canvas context not set');
+  async drawProject(project: IProject): Promise<void> {
+    this.drawProjectBackground(project.backgroundColor)
+
+    for (const element of project.elements) {
+      await this.drawElement(element)
     }
-    this.canvasCtx.fillStyle = color;
-    this.canvasCtx.fillRect(0, 0, this.canvas.width, this.canvas.height)
 
   }
 
   async drawElement(element: IElement): Promise<void> {
-    console.log('drawElement', element)
     if (isImageElement(element)) {
       await this.drawImage(element);
     } else if (isTextElement(element)) {
@@ -50,22 +47,26 @@ export class WorkspaceDrawerService {
     if (!this.canvasCtx) {
       throw new Error('Canvas context not set');
     }
-    const image = new Image();
-    image.onload = () => {
-      console.log('onload')
-      this.canvasCtx?.drawImage(
-        image,
-        imageElement.position.x,
-        imageElement.position.y,
-        imageElement.size.width,
-        imageElement.size.height
-      )
-    }
-    image.src = imageElement.asset.url;
+    const image = await loadImage(imageElement.asset);
+    this.canvasCtx.drawImage(
+      image,
+      imageElement.position.x,
+      imageElement.position.y,
+      imageElement.size.width,
+      imageElement.size.height
+    )
   }
 
   private async drawVideo(vidoeElement: IVideoElement): Promise<void> { }
   private async drawText(textElement: ITextElement): Promise<void> { }
   private async drawAudio(audioElement: IAudioElement): Promise<void> { }
   private async drawGroup(groupElement: IGroupElement): Promise<void> { }
+
+  private drawProjectBackground(color: HexColor): void {
+    if (!this.canvasCtx || !this.canvas) {
+      throw new Error('Canvas context not set');
+    }
+    this.canvasCtx.fillStyle = color;
+    this.canvasCtx.fillRect(0, 0, this.canvas.width, this.canvas.height)
+  }
 }

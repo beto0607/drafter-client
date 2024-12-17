@@ -1,0 +1,21 @@
+<ul>
+  <li>
+    <fa-icon [icon]="faSave"></fa-icon>
+  </li>
+  <li>
+    <fa-icon [icon]="faShare"></fa-icon>
+  </li>
+  <li>
+    <fa-icon [icon]="faDownload"></fa-icon>
+  </li>
+  <hr/>
+  <li>
+    <app-color-picker [currentColor]="currentBackgroundColor()"
+      (colorSelected)="onColorSelected($event)"
+    />
+  </li>
+  <hr/>
+  <li>
+    <fa-icon [icon]="faHome"></fa-icon>
+  </li>
+</ul>

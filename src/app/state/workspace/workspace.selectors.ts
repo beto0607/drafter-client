@@ -17,3 +17,13 @@ export const selectProject = createSelector(
   selectState,
   ({ project }) => project
 );
+
+export const selectBackgroundColor = createSelector(
+  selectProject,
+  (project) => project?.backgroundColor ?? '#ffffff'
+)
+
+export const selectProjectName = createSelector(
+  selectProject,
+  (project) => project?.name ?? ''
+)

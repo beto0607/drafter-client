@@ -1,5 +1,5 @@
 import { createActionGroup, props } from "@ngrx/store";
-import { IProject } from "../../domain";
+import { HexColor, IProject } from "../../domain";
 
 export const WorkspaceAsyncActions = createActionGroup({
   source: 'workspaceAsync',
@@ -9,3 +9,11 @@ export const WorkspaceAsyncActions = createActionGroup({
     'loadFailure': props<{ error: unknown }>(),
   }
 })
+
+export const WorkspaceProjectActions = createActionGroup(({
+  source: 'workspaceProject',
+  events: {
+    'set project name': props<{ newName: string }>(),
+    'set background color': props<{ newColor: HexColor }>()
+  }
+}))

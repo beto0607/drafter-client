@@ -4,6 +4,11 @@ import { resolveProjectFn } from './resolvers/project.resolver';
 
 export const routes: Routes = [
   {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'editor/new'
+  },
+  {
     path: 'editor',
     pathMatch: 'full',
     redirectTo: 'editor/new'

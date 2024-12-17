@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { WorkspaceAsyncActions } from './workspace.actions';
+import { WorkspaceAsyncActions, WorkspaceProjectActions } from './workspace.actions';
 import { IProject } from '../../domain';
 
 export interface IWorkspaceState {
@@ -48,4 +48,23 @@ export const reducer = createReducer<IWorkspaceState>(
       }
     }
   ),
+
+  on(WorkspaceProjectActions.setBackgroundColor, (state, { newColor }) => {
+    return {
+      ...state,
+      project: state.project ? {
+        ...state.project,
+        backgroundColor: newColor
+      } : undefined
+    }
+  }),
+  on(WorkspaceProjectActions.setProjectName, (state, { newName }) => {
+    return {
+      ...state,
+      project: state.project ? {
+        ...state.project,
+        name: newName
+      } : undefined
+    }
+  })
 );

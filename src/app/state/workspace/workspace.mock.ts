@@ -29,6 +29,6 @@ export const mockedProject: IProject = {
   ...mockedTimestamps(),
   id: '',
   name: 'TestProject',
-  backgroundColor: '#ccc',
+  backgroundColor: '#cccccc',
   elements: mockedElements,
 }
