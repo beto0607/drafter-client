@@ -11,12 +11,11 @@ export interface IElement extends WithTimestamp, WithId {
   name: string;
   locked: boolean;
   tags: string[];
-  children: IElement[]
 }
 
 export interface IImageElement extends IElement {
   type: 'image'
-  assset: IAsset<ImageTypes>;
+  asset: IAsset<ImageTypes>;
 }
 
 export interface IVideoElement extends IElement {
@@ -33,4 +32,9 @@ export interface ITextElement extends IElement {
   type: 'text';
   content: string;
   format: ITextFormat
+}
+
+export interface IGroupElement extends IElement {
+  type: 'group';
+  children: IElement[]
 }

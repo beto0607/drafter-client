@@ -29,11 +29,12 @@ export const reducer = createReducer<IWorkspaceState>(
     }
   ),
   on(
-    WorkspaceAsyncActions.loadSuccess, (state) => {
+    WorkspaceAsyncActions.loadSuccess, (state, { project }) => {
       return {
         ...state,
         loaded: true,
-        error: undefined
+        error: undefined,
+        project
       }
     }
   ),
@@ -42,7 +43,8 @@ export const reducer = createReducer<IWorkspaceState>(
       return {
         ...state,
         loaded: true,
-        error
+        error,
+        project: undefined
       }
     }
   ),
