@@ -4,6 +4,15 @@
   (document:mousedown)="onMouseDown($event)"
   (document:mouseup)="onMouseUp($event)"
 ></canvas>
-<div class="tools">
-  <h3>Tools</h3>
-</div>
+
+@let _elements = elements();
+@if(_elements){
+  <div class="elements-container">
+    @for(element of _elements; track element.id){
+      <app-element
+        [element]="element"
+      />
+
+    }
+  </div>
+}

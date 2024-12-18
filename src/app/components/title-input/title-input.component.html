@@ -1,0 +1,15 @@
+
+<div class="wrapper" (click)="onClick()">
+  @if(isEditing()){
+    <input
+      value="{{value()}}"
+      type="text" minlength="1" maxlength="50"
+      placeholder="Title:"
+      (change)="onValueChange($event)"
+    />
+
+  }@else{
+    <span>{{value()}}</span>
+    <fa-icon [icon]="editIcon"></fa-icon>
+  }
+</div>

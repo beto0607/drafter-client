@@ -1,5 +1,6 @@
 import {
   Component,
+  computed,
   effect,
   ElementRef,
   HostListener,
@@ -11,6 +12,7 @@ import { IElement, IPosition } from '../../../domain';
 import { WorkspaceStateService } from '../../../state/workspace';
 import { SetElementsPositionType } from '../../../state/workspace/workspace.actions.types';
 import { getBoundingRect, isPositionInRect } from '../../../utils/geom.utils';
+import { ElementComponent } from './element/element.component';
 import {
   ELEMENT_MIN_HEIGHT,
   ELEMENT_MIN_WIDTH,
@@ -21,7 +23,7 @@ import { WorkspaceResizeService } from './workspace-resize.service';
 
 @Component({
   selector: 'app-workspace',
-  imports: [],
+  imports: [ElementComponent],
   templateUrl: './workspace.component.html',
   styleUrl: './workspace.component.scss',
   providers: [WorkspaceResizeService, WorkspaceDrawerService],
@@ -39,6 +41,10 @@ export class WorkspaceComponent {
   private isResizing = false;
 
   private eventOffset: IPosition | undefined;
+
+  elements = computed(
+    () => this.workspaceStateService.project()?.elements ?? [],
+  );
 
   constructor() {
     effect(() => {

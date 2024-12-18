@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
+import { LogoComponent } from '../../components/logo/logo.component';
 import { ProjectNameComponent } from './project-name/project-name.component';
 import { ProjectToolsComponent } from './project-tools/project-tools.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
-import { LogoComponent } from '../../components/logo/logo.component';
 
 @Component({
   imports: [

@@ -1,9 +1,9 @@
-import { IAsset, ImageTypes } from '../domain';
+import { IAsset, ImageAssetType } from '../domain';
 
 const cachedImages = new Map<string, HTMLImageElement>();
 
 export function loadImage(
-  asset: IAsset<ImageTypes>,
+  asset: IAsset<ImageAssetType>,
   allowCached = true,
 ): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
