@@ -1,5 +1,5 @@
 import { createActionGroup, props } from "@ngrx/store";
-import { HexColor, IProject } from "../../domain";
+import { HexColor, IElement, IProject, ISize } from "../../domain";
 import { SetElementsPositionType } from "./workspace.actions.types";
 
 export const WorkspaceAsyncActions = createActionGroup({
@@ -14,7 +14,7 @@ export const WorkspaceAsyncActions = createActionGroup({
 export const WorkspaceProjectActions = createActionGroup(({
   source: 'workspaceProject',
   events: {
-    'set project name': props<{ newName: string }>(),
+    'set project name': props<{ newName: IProject['name'] }>(),
     'set background color': props<{ newColor: HexColor }>()
   }
 }))
@@ -22,6 +22,7 @@ export const WorkspaceProjectActions = createActionGroup(({
 export const WorkspaceElementActions = createActionGroup(({
   source: 'workspaceElements',
   events: {
-    'set elements position': props<{ updates: SetElementsPositionType }>()
+    'set elements position': props<{ updates: SetElementsPositionType }>(),
+    'set element size': props<{ elementId: IElement['id'], newSize: ISize }>()
   }
 }))

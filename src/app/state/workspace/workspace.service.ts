@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { HexColor } from "../../domain";
+import { HexColor, ISize } from "../../domain";
 import { WorkspaceAsyncActions, WorkspaceElementActions, WorkspaceProjectActions } from "./workspace.actions";
 import { SetElementsPositionType } from "./workspace.actions.types";
 import { selectBackgroundColor, selectError, selectLoaded, selectProject, selectProjectName } from "./workspace.selectors";
@@ -31,5 +31,9 @@ export class WorkspaceStateService {
 
   updateElementsPosition(updates: SetElementsPositionType): void {
     this.store.dispatch(WorkspaceElementActions.setElementsPosition({ updates }))
+  }
+
+  updateElementSize(elementId: string, newSize: ISize): void {
+    this.store.dispatch(WorkspaceElementActions.setElementSize({ elementId, newSize }))
   }
 }

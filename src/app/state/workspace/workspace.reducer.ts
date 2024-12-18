@@ -82,5 +82,23 @@ export const reducer = createReducer<IWorkspaceState>(
         elements: updatedElements
       }
     }
+  }),
+  on(WorkspaceElementActions.setElementSize, (state, { elementId, newSize }) => {
+    if (!state.project) {
+      return state
+    }
+    const updatedElements: IElement[] = state.project.elements.map((element) => {
+      const updateData = element.id === elementId
+      return updateData ?
+        { ...element, size: newSize }
+        : element;
+    });
+    return {
+      ...state,
+      project: {
+        ...state.project,
+        elements: updatedElements
+      }
+    }
   })
 );

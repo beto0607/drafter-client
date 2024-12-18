@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HexColor, IAudioElement, IElement, IGroupElement, IImageElement, IProject, ITextElement, IVideoElement } from "../../../domain";
 import { isAudioElement, isGroupElement, isImageElement, isTextElement, isVideoElement, loadImage } from "../../../utils";
-import { SELECTED_ELEMENT_COLOR } from "./workspace-drawer.constants";
+import { ELEMENT_BACKGROUND_COLOR, ELEMENT_BORDER_COLOR, ELEMENT_NAME_COLOR, ELEMENT_NAME_FONT, ELEMENT_NAME_OFFSET, RESIZE_ICON_COLOR, RESIZE_ICON_SIZE, SELECTED_ELEMENT_COLOR, SELECTED_ELEMENT_PADDING } from "./workspace-drawer.constants";
+import { drawFillRect, drawFillRoundRect, drawResizeIcon, drawStrokeRoundRect } from "../../../utils/canvas.utils";
 
 @Injectable()
 export class WorkspaceDrawerService {
@@ -15,6 +16,7 @@ export class WorkspaceDrawerService {
       throw new Error('Couldn\'t get context from canvas')
     }
     this.canvasCtx = canvasCtx
+    this.canvasCtx.font = "24px serif"
   }
 
   async drawProject(project: IProject, selectedElements: IElement['id'][]): Promise<void> {
@@ -49,17 +51,53 @@ export class WorkspaceDrawerService {
     if (!this.canvasCtx) {
       throw new Error('Canvas context not set');
     }
+    drawFillRoundRect(
+      this.canvasCtx,
+      {
+        x: imageElement.position.x - SELECTED_ELEMENT_PADDING,
+        y: imageElement.position.y - SELECTED_ELEMENT_PADDING - ELEMENT_NAME_OFFSET,
+        width: imageElement.size.width + (SELECTED_ELEMENT_PADDING * 2),
+        height: imageElement.size.height + (SELECTED_ELEMENT_PADDING * 2) + ELEMENT_NAME_OFFSET + RESIZE_ICON_SIZE,
+      },
+      ELEMENT_BACKGROUND_COLOR,
+      2
+    )
+    this.canvasCtx.beginPath()
+    this.canvasCtx.textAlign = 'center'
+    this.canvasCtx.textBaseline = 'middle'
+    this.canvasCtx.font = ELEMENT_NAME_FONT
+    this.canvasCtx.fillStyle = ELEMENT_NAME_COLOR
+    this.canvasCtx.fillText(
+      imageElement.name,
+      imageElement.position.x + (imageElement.size.width / 2),
+      imageElement.position.y + SELECTED_ELEMENT_PADDING - ELEMENT_NAME_OFFSET / 2,
+      imageElement.size.width
+    )
+    this.canvasCtx.fill()
     if (selected) {
-      this.canvasCtx.beginPath()
-      this.canvasCtx.strokeStyle = SELECTED_ELEMENT_COLOR;
-      this.canvasCtx.roundRect(
-        imageElement.position.x - 3,
-        imageElement.position.y - 3,
-        imageElement.size.width + 6,
-        imageElement.size.height + 6,
+      drawStrokeRoundRect(
+        this.canvasCtx,
+        {
+          x: imageElement.position.x - SELECTED_ELEMENT_PADDING,
+          y: imageElement.position.y - SELECTED_ELEMENT_PADDING - ELEMENT_NAME_OFFSET,
+          width: imageElement.size.width + (SELECTED_ELEMENT_PADDING * 2),
+          height: imageElement.size.height + (SELECTED_ELEMENT_PADDING * 2) + ELEMENT_NAME_OFFSET + RESIZE_ICON_SIZE,
+        },
+        SELECTED_ELEMENT_COLOR,
         2
       )
-      this.canvasCtx.stroke()
+    } else {
+      drawStrokeRoundRect(
+        this.canvasCtx,
+        {
+          x: imageElement.position.x - SELECTED_ELEMENT_PADDING,
+          y: imageElement.position.y - SELECTED_ELEMENT_PADDING - ELEMENT_NAME_OFFSET,
+          width: imageElement.size.width + (SELECTED_ELEMENT_PADDING * 2),
+          height: imageElement.size.height + (SELECTED_ELEMENT_PADDING * 2) + ELEMENT_NAME_OFFSET + RESIZE_ICON_SIZE
+        },
+        ELEMENT_BORDER_COLOR,
+        2
+      )
     }
     const image = await loadImage(imageElement.asset);
     this.canvasCtx.drawImage(
@@ -68,6 +106,16 @@ export class WorkspaceDrawerService {
       imageElement.position.y,
       imageElement.size.width,
       imageElement.size.height
+    )
+
+    drawResizeIcon(this.canvasCtx,
+      {
+        x: imageElement.position.x + imageElement.size.width - RESIZE_ICON_SIZE - SELECTED_ELEMENT_PADDING - 1,
+        y: imageElement.position.y + imageElement.size.height - SELECTED_ELEMENT_PADDING - 1,
+        width: RESIZE_ICON_SIZE,
+        height: RESIZE_ICON_SIZE
+      },
+      selected ? SELECTED_ELEMENT_COLOR : RESIZE_ICON_COLOR
     )
   }
 
@@ -80,7 +128,13 @@ export class WorkspaceDrawerService {
     if (!this.canvasCtx || !this.canvas) {
       throw new Error('Canvas context not set');
     }
-    this.canvasCtx.fillStyle = color;
-    this.canvasCtx.fillRect(0, 0, this.canvas.width, this.canvas.height)
+    drawFillRect(this.canvasCtx,
+      {
+        x: 0, y: 0,
+        width: this.canvas.width,
+        height: this.canvas.height
+      },
+      color
+    )
   }
 }

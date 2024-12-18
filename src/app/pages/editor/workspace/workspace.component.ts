@@ -1,10 +1,11 @@
 import { Component, effect, ElementRef, HostListener, inject, signal, viewChild } from "@angular/core";
+import { IElement, IPosition } from "../../../domain";
 import { WorkspaceStateService } from "../../../state/workspace";
+import { SetElementsPositionType } from "../../../state/workspace/workspace.actions.types";
+import { getBoundingRect, isPositionInRect } from "../../../utils/geom.utils";
+import { ELEMENT_MIN_HEIGHT, ELEMENT_MIN_WIDTH, RESIZE_ICON_SIZE } from "./workspace-drawer.constants";
 import { WorkspaceDrawerService } from "./workspace-drawer.service";
 import { WorkspaceResizeService } from "./workspace-resize.service";
-import { IElement, IPosition } from "../../../domain";
-import { isPositionInRect } from "../../../utils/geom.utils";
-import { SetElementsPositionType } from "../../../state/workspace/workspace.actions.types";
 
 @Component({
   selector: 'app-workspace',
@@ -25,6 +26,9 @@ export class WorkspaceComponent {
   private selectedElements = signal<IElement['id'][]>([])
 
   private updatedViewWhileMouseDown = false;
+  private isResizing = false;
+
+  private eventOffset: IPosition | undefined
 
   constructor() {
     effect(() => {
@@ -51,12 +55,33 @@ export class WorkspaceComponent {
     if (!project) {
       return;
     }
-    const clickedElement = [...project.elements].reverse().find((element) => isPositionInRect(clickPosition, { ...element.size, ...element.position }))
+    const clickedElement = [...project.elements].reverse()
+      .find((element) => isPositionInRect(clickPosition, getBoundingRect(element)))
 
     if (!clickedElement) {
       this.selectedElements.set([])
       return
     }
+    this.eventOffset = {
+      x: clickPosition.x - clickedElement.position.x,
+      y: clickPosition.y - clickedElement.position.y,
+    }
+
+    const isResizeIconClicked = isPositionInRect(
+      clickPosition,
+      {
+        x: clickedElement.position.x + clickedElement.size.width - RESIZE_ICON_SIZE,
+        y: clickedElement.position.y + clickedElement.size.height,
+        width: RESIZE_ICON_SIZE,
+        height: RESIZE_ICON_SIZE
+      }
+    )
+    console.log(isResizeIconClicked)
+
+    if (isResizeIconClicked) {
+      this.isResizing = true;
+    }
+
 
     const multipleElements = event.ctrlKey || event.shiftKey
     if (!multipleElements && this.selectedElements().includes(clickedElement.id)) {
@@ -76,6 +101,7 @@ export class WorkspaceComponent {
       this.selectedElements.set([])
     }
     this.updatedViewWhileMouseDown = false;
+    this.isResizing = false;
   }
 
   onMouseMove(event: MouseEvent): void {
@@ -83,6 +109,29 @@ export class WorkspaceComponent {
     if (!selectedElements.length || event.buttons !== 1) {
       return
     }
+    const eventPosition = { x: event.x, y: event.y }
+    if (this.isResizing) {
+      if (selectedElements.length === 1) {
+        this.resizeSelectedElement(selectedElements[0], eventPosition)
+      }
+      return
+    }
+    this.moveSelectedElements(selectedElements, eventPosition)
+  }
+
+  private resizeSelectedElement(elementId: IElement['id'], eventPosition: IPosition): void {
+    const project = this.workspaceStateService.project();
+    const elementToUpdate = project?.elements.find(({ id }) => elementId === id)
+    if (!elementToUpdate) {
+      return;
+    }
+    this.workspaceStateService.updateElementSize(elementId, {
+      width: Math.max(Math.abs(elementToUpdate.position.x - eventPosition.x), ELEMENT_MIN_WIDTH),
+      height: Math.max(Math.abs(elementToUpdate.position.y - eventPosition.y) - RESIZE_ICON_SIZE, ELEMENT_MIN_HEIGHT),
+    })
+  }
+
+  private moveSelectedElements(selectedElements: IElement['id'][], eventPosition: IPosition): void {
     const updates: SetElementsPositionType = [];
     const elements = this.workspaceStateService.project()?.elements ?? [];
     for (const selectedElement of selectedElements) {
@@ -91,8 +140,8 @@ export class WorkspaceComponent {
         continue;
       }
       const newPosition: IPosition = {
-        x: event.x - Math.round(element.size.width / 2),
-        y: event.y - Math.round(element.size.height / 2),
+        x: eventPosition.x - (this.eventOffset?.x ?? 0),
+        y: eventPosition.y - (this.eventOffset?.y ?? 0),
       }
       updates.push({
         elementId: element.id,
