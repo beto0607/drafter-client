@@ -1,0 +1,9 @@
+:host {
+  width: var(--img-size, 48px);
+  height: var(--img-size, 48px);
+
+  img {
+    width: var(--img-size, 48px);
+    height: var(--img-size, 48px);
+  }
+}

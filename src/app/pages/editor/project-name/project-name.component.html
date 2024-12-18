@@ -1,0 +1,14 @@
+<div class="wrapper" (click)="onClick()">
+  @if(isEditing()){
+    <input
+      value="{{projectName()}}"
+      type="text" minlength="1" maxlength="50"
+      placeholder="Project name:"
+      (change)="onNameSubmitted($event)"
+    />
+
+  }@else{
+    <span>{{projectName()}}</span>
+    <fa-icon [icon]="editIcon"></fa-icon>
+  }
+</div>

@@ -1,0 +1,10 @@
+canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.tools {
+  z-index: 1;
+  position: relative;
+}

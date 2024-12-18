@@ -1,0 +1,26 @@
+app-project-tools {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.project-name {
+  position: absolute;
+  z-index: 1;
+  left: 8px;
+  top: 8px;
+  height: 48px;
+  display: flex;
+  background-color: var(--ui-bg-color);
+  align-items: center;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: var(--ui-container-radius);
+
+  app-logo {
+    --img-size: 36px;
+    margin-right: 8px;
+  }
+}
