@@ -36,11 +36,11 @@ module.exports = tseslint.config(
       "@typescript-eslint/no-unused-vars": [
         "error",
         {
-          "argsIgnorePattern": "^_",
-          "varsIgnorePattern": "^_",
-          "caughtErrorsIgnorePattern": "^_"
-        }
-      ]
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+        },
+      ],
     },
   },
   {
@@ -53,5 +53,5 @@ module.exports = tseslint.config(
       "@angular-eslint/template/click-events-have-key-events": "warn",
       "@angular-eslint/template/interactive-supports-focus": "warn",
     },
-  }
+  },
 );
