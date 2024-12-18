@@ -6,13 +6,17 @@
 ></canvas>
 
 @let _elements = elements();
+@let _selectedElements = selectedElements();
+
 @if(_elements){
   <div class="elements-container">
     @for(element of _elements; track element.id){
       <app-element
+        [class.selected]="_selectedElements.includes(element.id)"
         [element]="element"
+        (elementClicked)="onElementClicked(element)"
+        (resizePressed)="onResizePressed(element)"
       />
-
     }
   </div>
 }

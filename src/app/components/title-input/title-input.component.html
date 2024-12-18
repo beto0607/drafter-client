@@ -6,6 +6,7 @@
       type="text" minlength="1" maxlength="50"
       placeholder="Title:"
       (change)="onValueChange($event)"
+      (blur)="onInputBlur()"
     />
 
   }@else{

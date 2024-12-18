@@ -1,0 +1,38 @@
+:host {
+  --border-color: var(--ui-element-border-color);
+  position: absolute;
+  border-radius: 2px;
+  background-color: var(--ui-element-bg);
+  border: 1px solid var(--border-color);
+  padding: 4px;
+  height: 100%;
+  width: 100%;
+
+  &.selected {
+    --border-color: var(--ui-element-selected-border-color);
+  }
+
+  .container {
+    width: 100%;
+    max-width: 100%;
+    height: inherit;
+    display: grid;
+    // height: 100%;
+    grid-template-columns: 1fr;
+    grid-template-rows: 24px 1fr 29px;
+
+    app-element-title {
+      grid-row: 1;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    .content {
+      grid-row: 2;
+    }
+
+    app-element-footer {
+      grid-row: 3;
+    }
+  }
+}

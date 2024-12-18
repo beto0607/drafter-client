@@ -1,0 +1,6 @@
+@let _pill = pill();
+<div class="wrapper"
+  (click)="onPillClicked($event)"
+  [style]="'--bg-color:' + _pill.color">
+  <span>{{_pill.text}}</span>
+</div>

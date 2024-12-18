@@ -29,10 +29,8 @@ export class ColorPickerComponent {
   }
 
   openColorEditor(): void {
-    const { x, y } = (
-      this.elementRef.nativeElement as HTMLElement
-    ).getBoundingClientRect();
-    console.log(x, y);
+    const nativeElement = this.elementRef.nativeElement as HTMLElement;
+    const { x, y } = nativeElement.getBoundingClientRect();
     const colorPopover = this.colorPopover().nativeElement;
     colorPopover.style.top = `${y - 20}px`;
     colorPopover.style.left = `${x + 36}px`;

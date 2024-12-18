@@ -1,3 +1,10 @@
-<div class="container">
-  <app-element-title />
+@let _element = element();
+<div class="container" (click)="elementClicked.emit()">
+  <app-element-title [elementTitle]="_element.title"/>
+  <div class="content">
+    <span> some text</span>
+  </div>
+  <app-element-footer [element]="_element"
+    (resizePressed)="resizePressed.emit()"
+  />
 </div>

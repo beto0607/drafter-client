@@ -1,0 +1,45 @@
+:host {
+  height: inherit;
+  margin-bottom: 4px;
+
+  .wrapper {
+    display: inline-flex;
+    width: 100%;
+
+    .tags-wrapper {
+      display: grid;
+      max-width: 100%;
+      grid-template-rows: 1fr;
+      grid-template-columns: auto 1fr;
+
+      .tags {
+        display: inline-flex;
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+
+      .add-tag {
+        margin-left: 4px;
+      }
+    }
+
+    .resize-wrapper {
+      vertical-align: bottom;
+      display: inline-block;
+      width: 24px;
+      height: inherit;
+      margin: auto;
+      place-self: flex-end;
+      margin-bottom: -13px;
+      margin-right: -7px;
+
+      svg {
+        width: 24px;
+        height: 24px;
+        margin: auto;
+        margin-bottom: 0;
+        stroke: var(--border-color);
+      }
+    }
+  }
+}

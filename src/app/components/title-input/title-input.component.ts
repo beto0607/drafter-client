@@ -25,6 +25,10 @@ export class TitleInputComponent {
     this.isEditing.set(true);
   }
 
+  onInputBlur(): void {
+    this.isEditing.set(false);
+  }
+
   onValueChange(event: Event): void {
     const newValue = (event.target as HTMLInputElement).value.trim();
     if (!newValue && !this.allowEmpty()) {

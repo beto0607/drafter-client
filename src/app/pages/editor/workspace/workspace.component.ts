@@ -35,7 +35,7 @@ export class WorkspaceComponent {
 
   private canvas = viewChild.required<ElementRef<HTMLCanvasElement>>('canvas');
 
-  private selectedElements = signal<IElement['id'][]>([]);
+  selectedElements = signal<IElement['id'][]>([]);
 
   private updatedViewWhileMouseDown = false;
   private isResizing = false;
@@ -61,6 +61,14 @@ export class WorkspaceComponent {
     });
   }
 
+  onElementClicked(element: IElement): void {
+    const selectedElements = this.selectedElements();
+    if (selectedElements.includes(element.id)) {
+      return;
+    }
+    this.selectedElements.update((elements) => [...elements, element.id]);
+  }
+
   onMouseDown(event: MouseEvent): void {
     const clickPosition: IPosition = {
       x: event.x,
@@ -69,6 +77,9 @@ export class WorkspaceComponent {
 
     const project = this.workspaceStateService.project();
     if (!project) {
+      return;
+    }
+    if (this.isResizing) {
       return;
     }
     const clickedElement = [...project.elements]
@@ -86,19 +97,19 @@ export class WorkspaceComponent {
       y: clickPosition.y - clickedElement.position.y,
     };
 
-    const isResizeIconClicked = isPositionInRect(clickPosition, {
-      x:
-        clickedElement.position.x +
-        clickedElement.size.width -
-        RESIZE_ICON_SIZE,
-      y: clickedElement.position.y + clickedElement.size.height,
-      width: RESIZE_ICON_SIZE,
-      height: RESIZE_ICON_SIZE,
-    });
-
-    if (isResizeIconClicked) {
-      this.isResizing = true;
-    }
+    // const isResizeIconClicked = isPositionInRect(clickPosition, {
+    //   x:
+    //     clickedElement.position.x +
+    //     clickedElement.size.width -
+    //     RESIZE_ICON_SIZE,
+    //   y: clickedElement.position.y + clickedElement.size.height,
+    //   width: RESIZE_ICON_SIZE,
+    //   height: RESIZE_ICON_SIZE,
+    // });
+    //
+    // if (isResizeIconClicked) {
+    //   this.isResizing = true;
+    // }
 
     const multipleElements = event.ctrlKey || event.shiftKey;
     if (
@@ -117,6 +128,12 @@ export class WorkspaceComponent {
       }
       return [...selectedElements, clickedElement.id];
     });
+  }
+
+  onResizePressed(element: IElement): void {
+    this.selectedElements.set([element.id]);
+    this.isResizing = true;
+    console.log('onResizePressed', element.id);
   }
 
   onMouseUp(_event: MouseEvent): void {

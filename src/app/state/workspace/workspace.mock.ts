@@ -10,12 +10,21 @@ export const mockedElements: IElement[] = [
   {
     ...mockedTimestamps(),
     id: '91637acc-02b3-42c9-80fc-28cc2cc7b369',
-    tags: [],
+    tags: [
+      {
+        color: '#00ff00',
+        text: 'LGTM',
+      },
+      {
+        color: '#9c1',
+        text: 'Blocked',
+      },
+    ],
     position: { x: 200, y: 200 },
-    size: { width: 130, height: 130 },
+    size: { width: 100, height: 130 },
     rotation: { x: 0, y: 0, z: 0 },
     locked: false,
-    title: 'MockedImage',
+    title: 'MMockedImageMockedImageockedImage',
     caption: `
 ### This is a test
 [] accept Markdown
