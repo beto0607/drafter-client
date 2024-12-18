@@ -80,7 +80,7 @@ export function drawResizeIcon(
 ): void {
   const path = new Path2D()
   const svgPath = new Path2D("M21 15L15 21M21 8L8 21")
-  let m = new DOMMatrix();
+  const m = new DOMMatrix();
   m.a = m.d = 0.75;
   m.b = 0;
   m.c = 0;

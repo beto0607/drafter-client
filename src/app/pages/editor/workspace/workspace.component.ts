@@ -76,7 +76,6 @@ export class WorkspaceComponent {
         height: RESIZE_ICON_SIZE
       }
     )
-    console.log(isResizeIconClicked)
 
     if (isResizeIconClicked) {
       this.isResizing = true;
@@ -97,6 +96,7 @@ export class WorkspaceComponent {
   }
 
   onMouseUp(_event: MouseEvent): void {
+
     if (this.updatedViewWhileMouseDown) {
       this.selectedElements.set([])
     }

@@ -2,11 +2,12 @@ import { Component, inject } from "@angular/core";
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faDownload, faHome, faSave, faShare } from '@fortawesome/free-solid-svg-icons';
 import { ColorPickerComponent } from "../../../components/color-picker/color-picker.component";
-import { WorkspaceStateService } from "../../../state/workspace";
 import { HexColor } from "../../../domain";
+import { WorkspaceStateService } from "../../../state/workspace";
 
 @Component({
-  imports: [FaIconComponent, ColorPickerComponent],
+  imports: [FaIconComponent,
+    ColorPickerComponent],
   selector: 'app-project-tools',
   templateUrl: './project-tools.component.html',
   styleUrl: './project-tools.component.scss'

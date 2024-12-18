@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
-import { HexColor, IAudioElement, IElement, IGroupElement, IImageElement, IProject, ITextElement, IVideoElement } from "../../../domain";
+import { HexColor, IElement, IImageElement, IProject } from "../../../domain";
 import { isAudioElement, isGroupElement, isImageElement, isTextElement, isVideoElement, loadImage } from "../../../utils";
-import { ELEMENT_BACKGROUND_COLOR, ELEMENT_BORDER_COLOR, ELEMENT_NAME_COLOR, ELEMENT_NAME_FONT, ELEMENT_NAME_OFFSET, RESIZE_ICON_COLOR, RESIZE_ICON_SIZE, SELECTED_ELEMENT_COLOR, SELECTED_ELEMENT_PADDING } from "./workspace-drawer.constants";
 import { drawFillRect, drawFillRoundRect, drawResizeIcon, drawStrokeRoundRect } from "../../../utils/canvas.utils";
+import { ELEMENT_BACKGROUND_COLOR, ELEMENT_BORDER_COLOR, ELEMENT_NAME_COLOR, ELEMENT_NAME_FONT, ELEMENT_NAME_OFFSET, RESIZE_ICON_COLOR, RESIZE_ICON_SIZE, SELECTED_ELEMENT_COLOR, SELECTED_ELEMENT_PADDING } from "./workspace-drawer.constants";
 
 @Injectable()
 export class WorkspaceDrawerService {
@@ -33,13 +33,13 @@ export class WorkspaceDrawerService {
     if (isImageElement(element)) {
       await this.drawImage(element, selected);
     } else if (isTextElement(element)) {
-      await this.drawText(element);
+      // await this.drawText(element);
     } else if (isVideoElement(element)) {
-      await this.drawVideo(element);
+      // await this.drawVideo(element);
     } else if (isAudioElement(element)) {
-      await this.drawAudio(element);
+      // await this.drawAudio(element);
     } else if (isGroupElement(element)) {
-      await this.drawGroup(element);
+      // await this.drawGroup(element);
     } else {
       throw new Error('Unknwon element type', {
         cause: element
@@ -119,10 +119,6 @@ export class WorkspaceDrawerService {
     )
   }
 
-  private async drawVideo(vidoeElement: IVideoElement): Promise<void> { }
-  private async drawText(textElement: ITextElement): Promise<void> { }
-  private async drawAudio(audioElement: IAudioElement): Promise<void> { }
-  private async drawGroup(groupElement: IGroupElement): Promise<void> { }
 
   private drawProjectBackground(color: HexColor): void {
     if (!this.canvasCtx || !this.canvas) {
