@@ -1,3 +1,6 @@
-import { IPosition } from "../../domain";
+import { IPosition } from '../../domain';
 
-export type SetElementsPositionType = { elementId: string, newPosition: IPosition }[]
+export type SetElementsPositionType = {
+  elementId: string;
+  newPosition: IPosition;
+}[];

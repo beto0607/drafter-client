@@ -1,4 +1,11 @@
-import { IAudioElement, IElement, IGroupElement, IImageElement, ITextElement, IVideoElement } from "../domain";
+import {
+  IAudioElement,
+  IElement,
+  IGroupElement,
+  IImageElement,
+  ITextElement,
+  IVideoElement,
+} from '../domain';
 
 export function isImageElement(element: IElement): element is IImageElement {
   return element.type === 'image' && 'asset' in element;

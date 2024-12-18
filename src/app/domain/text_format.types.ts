@@ -1,4 +1,4 @@
-import { HexColor } from "./misc.types";
+import { HexColor } from './misc.types';
 
 export interface ITextFormat {
   font: string;
@@ -7,4 +7,3 @@ export interface ITextFormat {
   italic: boolean;
   color: HexColor;
 }
-

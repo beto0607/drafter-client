@@ -6,21 +6,21 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'editor/new'
+    redirectTo: 'editor/new',
   },
   {
     path: 'editor',
     pathMatch: 'full',
-    redirectTo: 'editor/new'
+    redirectTo: 'editor/new',
   },
   {
     component: EditorComponent,
     path: 'editor/new',
-    resolve: { project: resolveProjectFn }
+    resolve: { project: resolveProjectFn },
   },
   {
     component: EditorComponent,
     path: 'editor/:id',
-    resolve: { project: resolveProjectFn }
-  }
+    resolve: { project: resolveProjectFn },
+  },
 ];

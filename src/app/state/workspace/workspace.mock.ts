@@ -1,10 +1,10 @@
-import { IImageElement, IProject, WithTimestamp } from "../../domain";
+import { IImageElement, IProject, WithTimestamp } from '../../domain';
 
 const mockedTimestamps = (): WithTimestamp => ({
   createdAt: new Date().toISOString(),
   modifiedAt: undefined,
   deletedAt: undefined,
-})
+});
 
 export const mockedElements: IImageElement[] = [
   {
@@ -22,13 +22,13 @@ export const mockedElements: IImageElement[] = [
       id: '01c19983-9891-4542-8d6b-69e4cf647048',
       type: 'jpeg',
       ...mockedTimestamps(),
-    }
-  }
-]
+    },
+  },
+];
 export const mockedProject: IProject = {
   ...mockedTimestamps(),
   id: '81b3e7e9-f020-40ac-ab5f-da7607e9cb62',
   name: 'TestProject',
   backgroundColor: '#cccccc',
   elements: mockedElements,
-}
+};
