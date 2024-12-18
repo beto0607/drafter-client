@@ -1,19 +1,17 @@
 import { createReducer, on } from '@ngrx/store';
-import { WorkspaceAsyncActions, WorkspaceProjectActions } from './workspace.actions';
-import { IProject } from '../../domain';
+import { IElement, IProject } from '../../domain';
+import { WorkspaceAsyncActions, WorkspaceElementActions, WorkspaceProjectActions } from './workspace.actions';
 
 export interface IWorkspaceState {
   loaded: boolean;
   error: unknown | undefined;
   project: IProject | undefined;
-  elements: any[];
 }
 
 const initialState: IWorkspaceState = {
   error: undefined,
   loaded: false,
   project: undefined,
-  elements: [],
 }
 export const WORKSPACE_FEATURE_KEY = "workspace"
 
@@ -65,6 +63,24 @@ export const reducer = createReducer<IWorkspaceState>(
         ...state.project,
         name: newName
       } : undefined
+    }
+  }),
+  on(WorkspaceElementActions.setElementsPosition, (state, { updates }) => {
+    if (!state.project) {
+      return state
+    }
+    const updatedElements: IElement[] = state.project.elements.map((element) => {
+      const updateData = updates.find((update) => update.elementId === element.id)
+      return updateData ?
+        { ...element, position: updateData.newPosition }
+        : element;
+    });
+    return {
+      ...state,
+      project: {
+        ...state.project,
+        elements: updatedElements
+      }
     }
   })
 );

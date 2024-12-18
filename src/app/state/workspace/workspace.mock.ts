@@ -9,7 +9,7 @@ const mockedTimestamps = (): WithTimestamp => ({
 export const mockedElements: IImageElement[] = [
   {
     ...mockedTimestamps(),
-    id: '1',
+    id: '91637acc-02b3-42c9-80fc-28cc2cc7b369',
     type: 'image',
     tags: [],
     position: { x: 100, y: 100 },
@@ -19,7 +19,7 @@ export const mockedElements: IImageElement[] = [
     name: 'MockedImage',
     asset: {
       url: 'https://mdn.github.io/shared-assets/images/examples/rhino.jpg',
-      id: '',
+      id: '01c19983-9891-4542-8d6b-69e4cf647048',
       type: 'jpeg',
       ...mockedTimestamps(),
     }
@@ -27,7 +27,7 @@ export const mockedElements: IImageElement[] = [
 ]
 export const mockedProject: IProject = {
   ...mockedTimestamps(),
-  id: '',
+  id: '81b3e7e9-f020-40ac-ab5f-da7607e9cb62',
   name: 'TestProject',
   backgroundColor: '#cccccc',
   elements: mockedElements,
