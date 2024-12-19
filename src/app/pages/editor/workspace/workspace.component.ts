@@ -11,7 +11,6 @@ import {
 import { IElement, IPosition } from '../../../domain';
 import { WorkspaceStateService } from '../../../state/workspace';
 import { SetElementsPositionType } from '../../../state/workspace/workspace.actions.types';
-import { getBoundingRect, isPositionInRect } from '../../../utils/geom.utils';
 import { ElementComponent } from './element/element.component';
 import {
   ELEMENT_MIN_HEIGHT,
@@ -82,12 +81,10 @@ export class WorkspaceComponent {
     if (this.isResizing) {
       return;
     }
-    const clickedElement = [...project.elements]
-      .reverse()
-      .find((element) =>
-        isPositionInRect(clickPosition, getBoundingRect(element)),
-      );
-
+    const selectedElements = this.selectedElements();
+    const clickedElement = project.elements.find(({ id }) =>
+      selectedElements.includes(id),
+    );
     if (!clickedElement) {
       this.selectedElements.set([]);
       return;
@@ -96,44 +93,11 @@ export class WorkspaceComponent {
       x: clickPosition.x - clickedElement.position.x,
       y: clickPosition.y - clickedElement.position.y,
     };
-
-    // const isResizeIconClicked = isPositionInRect(clickPosition, {
-    //   x:
-    //     clickedElement.position.x +
-    //     clickedElement.size.width -
-    //     RESIZE_ICON_SIZE,
-    //   y: clickedElement.position.y + clickedElement.size.height,
-    //   width: RESIZE_ICON_SIZE,
-    //   height: RESIZE_ICON_SIZE,
-    // });
-    //
-    // if (isResizeIconClicked) {
-    //   this.isResizing = true;
-    // }
-
-    const multipleElements = event.ctrlKey || event.shiftKey;
-    if (
-      !multipleElements &&
-      this.selectedElements().includes(clickedElement.id)
-    ) {
-      return;
-    }
-    this.selectedElements.update((selectedElements) => {
-      if (selectedElements.includes(clickedElement.id)) {
-        return multipleElements
-          ? selectedElements.filter(
-              (elementId) => clickedElement.id !== elementId,
-            )
-          : [];
-      }
-      return [...selectedElements, clickedElement.id];
-    });
   }
 
   onResizePressed(element: IElement): void {
     this.selectedElements.set([element.id]);
     this.isResizing = true;
-    console.log('onResizePressed', element.id);
   }
 
   onMouseUp(_event: MouseEvent): void {
