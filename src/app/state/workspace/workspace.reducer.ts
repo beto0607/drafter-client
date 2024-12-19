@@ -110,4 +110,25 @@ export const reducer = createReducer<IWorkspaceState>(
       };
     },
   ),
+  on(
+    WorkspaceElementActions.setElementCaption,
+    (state, { elementId, newCaption }) => {
+      if (!state.project) {
+        return state;
+      }
+      const updatedElements: IElement[] = state.project.elements.map(
+        (element) => {
+          const updateData = element.id === elementId;
+          return updateData ? { ...element, caption: newCaption } : element;
+        },
+      );
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          elements: updatedElements,
+        },
+      };
+    },
+  ),
 );

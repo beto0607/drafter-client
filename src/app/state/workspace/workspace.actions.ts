@@ -24,5 +24,9 @@ export const WorkspaceElementActions = createActionGroup({
   events: {
     'set elements position': props<{ updates: SetElementsPositionType }>(),
     'set element size': props<{ elementId: IElement['id']; newSize: ISize }>(),
+    'set element caption': props<{
+      elementId: IElement['id'];
+      newCaption: IElement['caption'];
+    }>(),
   },
 });

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { HexColor, ISize } from '../../domain';
+import { IElement, IProject } from '../../domain';
 import {
   WorkspaceAsyncActions,
   WorkspaceElementActions,
@@ -27,17 +27,17 @@ export class WorkspaceStateService {
   backgroundColor = this.store.selectSignal(selectBackgroundColor);
   projectName = this.store.selectSignal(selectProjectName);
 
-  loadProject(id: string | undefined): void {
+  loadProject(id: IProject['id'] | undefined): void {
     this.store.dispatch(WorkspaceAsyncActions.load({ id }));
   }
 
-  setBackgroundColor(newColor: HexColor): void {
+  setBackgroundColor(newColor: IProject['backgroundColor']): void {
     this.store.dispatch(
       WorkspaceProjectActions.setBackgroundColor({ newColor }),
     );
   }
 
-  setProjectName(newName: string): void {
+  setProjectName(newName: IProject['name']): void {
     this.store.dispatch(WorkspaceProjectActions.setProjectName({ newName }));
   }
 
@@ -47,9 +47,21 @@ export class WorkspaceStateService {
     );
   }
 
-  updateElementSize(elementId: string, newSize: ISize): void {
+  updateElementSize(
+    elementId: IElement['id'],
+    newSize: IElement['size'],
+  ): void {
     this.store.dispatch(
       WorkspaceElementActions.setElementSize({ elementId, newSize }),
+    );
+  }
+
+  updateElementCaption(
+    elementId: IElement['id'],
+    newCaption: IElement['caption'],
+  ): void {
+    this.store.dispatch(
+      WorkspaceElementActions.setElementCaption({ elementId, newCaption }),
     );
   }
 }

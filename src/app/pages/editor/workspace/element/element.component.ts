@@ -1,10 +1,16 @@
-import { Component, input, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { IElement } from '../../../../domain';
+import { WorkspaceStateService } from '../../../../state/workspace';
+import { ElementContentComponent } from './element-content/element-content.component';
 import { ElementFooterComponent } from './element-footer/element-footer.component';
 import { ElementTitleComponent } from './element-title/element-title.component';
 
 @Component({
-  imports: [ElementTitleComponent, ElementFooterComponent],
+  imports: [
+    ElementTitleComponent,
+    ElementContentComponent,
+    ElementFooterComponent,
+  ],
   selector: 'app-element',
   templateUrl: './element.component.html',
   styleUrl: './element.component.scss',
@@ -16,6 +22,8 @@ import { ElementTitleComponent } from './element-title/element-title.component';
   },
 })
 export class ElementComponent {
+  private workspaceStateService = inject(WorkspaceStateService);
+
   element = input.required<IElement>();
   elementClicked = output();
   resizePressed = output();
@@ -29,11 +37,18 @@ export class ElementComponent {
   }
 
   get width(): string {
-    console.log(this.element().size.width);
     return this.element().size.width + 'px';
   }
 
   get height(): string {
     return this.element().size.height + 'px';
+  }
+
+  onCaptionUpdated(newCaption: IElement['caption']): void {
+    console.log(newCaption);
+    this.workspaceStateService.updateElementCaption(
+      this.element().id,
+      newCaption,
+    );
   }
 }
