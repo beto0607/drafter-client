@@ -1,0 +1,30 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: 30px auto 30px;
+  grid-template-rows: auto 30px auto;
+  min-height: 200px;
+
+  .content {
+    place-self: center;
+    grid-column: 1/-1;
+    grid-row: 1/-1;
+  }
+
+  button {
+    z-index: 2;
+    grid-row: 2;
+    border: none;
+    outline: none;
+    color: white;
+    border-radius: 2px;
+    background-color: rgba(0, 0, 0, 0.25);
+
+    &.left-arrow {
+      grid-column: 1;
+    }
+
+    &.right-arrow {
+      grid-column: 3;
+    }
+  }
+}

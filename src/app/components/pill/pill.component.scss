@@ -1,0 +1,13 @@
+.wrapper {
+  display: inline-block;
+  background-color: var(--bg-color, light-blue);
+  padding: 2px 3px;
+  border-radius: 3px;
+  margin-right: 4px;
+  border: 1px solid var(--bg-color, light-blue);
+  cursor: pointer;
+
+  &:hover {
+    border-color: #00f;
+  }
+}

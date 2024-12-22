@@ -1,7 +1,7 @@
 import { HexColor } from '../../../domain';
 
-export const ELEMENT_MIN_WIDTH = 100;
-export const ELEMENT_MIN_HEIGHT = 100;
+export const ELEMENT_MIN_WIDTH = 250;
+export const ELEMENT_MIN_HEIGHT = 250;
 
 export const ELEMENT_NAME_FONT = '12px serif';
 export const ELEMENT_NAME_COLOR: HexColor = '#000';

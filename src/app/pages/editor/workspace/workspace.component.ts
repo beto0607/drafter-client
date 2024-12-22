@@ -1,5 +1,6 @@
 import {
   Component,
+  computed,
   effect,
   ElementRef,
   HostListener,
@@ -10,7 +11,7 @@ import {
 import { IElement, IPosition } from '../../../domain';
 import { WorkspaceStateService } from '../../../state/workspace';
 import { SetElementsPositionType } from '../../../state/workspace/workspace.actions.types';
-import { getBoundingRect, isPositionInRect } from '../../../utils/geom.utils';
+import { ElementComponent } from './element/element.component';
 import {
   ELEMENT_MIN_HEIGHT,
   ELEMENT_MIN_WIDTH,
@@ -21,7 +22,7 @@ import { WorkspaceResizeService } from './workspace-resize.service';
 
 @Component({
   selector: 'app-workspace',
-  imports: [],
+  imports: [ElementComponent],
   templateUrl: './workspace.component.html',
   styleUrl: './workspace.component.scss',
   providers: [WorkspaceResizeService, WorkspaceDrawerService],
@@ -33,12 +34,16 @@ export class WorkspaceComponent {
 
   private canvas = viewChild.required<ElementRef<HTMLCanvasElement>>('canvas');
 
-  private selectedElements = signal<IElement['id'][]>([]);
+  selectedElements = signal<IElement['id'][]>([]);
 
   private updatedViewWhileMouseDown = false;
   private isResizing = false;
 
   private eventOffset: IPosition | undefined;
+
+  elements = computed(
+    () => this.workspaceStateService.project()?.elements ?? [],
+  );
 
   constructor() {
     effect(() => {
@@ -55,6 +60,14 @@ export class WorkspaceComponent {
     });
   }
 
+  onElementClicked(element: IElement): void {
+    const selectedElements = this.selectedElements();
+    if (selectedElements.includes(element.id)) {
+      return;
+    }
+    this.selectedElements.update((elements) => [...elements, element.id]);
+  }
+
   onMouseDown(event: MouseEvent): void {
     const clickPosition: IPosition = {
       x: event.x,
@@ -65,12 +78,13 @@ export class WorkspaceComponent {
     if (!project) {
       return;
     }
-    const clickedElement = [...project.elements]
-      .reverse()
-      .find((element) =>
-        isPositionInRect(clickPosition, getBoundingRect(element)),
-      );
-
+    if (this.isResizing) {
+      return;
+    }
+    const selectedElements = this.selectedElements();
+    const clickedElement = project.elements.find(({ id }) =>
+      selectedElements.includes(id),
+    );
     if (!clickedElement) {
       this.selectedElements.set([]);
       return;
@@ -79,38 +93,11 @@ export class WorkspaceComponent {
       x: clickPosition.x - clickedElement.position.x,
       y: clickPosition.y - clickedElement.position.y,
     };
+  }
 
-    const isResizeIconClicked = isPositionInRect(clickPosition, {
-      x:
-        clickedElement.position.x +
-        clickedElement.size.width -
-        RESIZE_ICON_SIZE,
-      y: clickedElement.position.y + clickedElement.size.height,
-      width: RESIZE_ICON_SIZE,
-      height: RESIZE_ICON_SIZE,
-    });
-
-    if (isResizeIconClicked) {
-      this.isResizing = true;
-    }
-
-    const multipleElements = event.ctrlKey || event.shiftKey;
-    if (
-      !multipleElements &&
-      this.selectedElements().includes(clickedElement.id)
-    ) {
-      return;
-    }
-    this.selectedElements.update((selectedElements) => {
-      if (selectedElements.includes(clickedElement.id)) {
-        return multipleElements
-          ? selectedElements.filter(
-              (elementId) => clickedElement.id !== elementId,
-            )
-          : [];
-      }
-      return [...selectedElements, clickedElement.id];
-    });
+  onResizePressed(element: IElement): void {
+    this.selectedElements.set([element.id]);
+    this.isResizing = true;
   }
 
   onMouseUp(_event: MouseEvent): void {

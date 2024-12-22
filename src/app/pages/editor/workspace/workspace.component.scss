@@ -4,7 +4,12 @@ canvas {
   z-index: 0;
 }
 
-.tools {
+.elements-container {
   z-index: 1;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  overflow: visible;
 }

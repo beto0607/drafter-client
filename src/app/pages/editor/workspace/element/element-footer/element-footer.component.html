@@ -1,0 +1,23 @@
+@let _element = element();
+<div class="wrapper">
+  <div class="tags-wrapper">
+    <div class="tags">
+      @for(tag of _element.tags; track tag){
+        <app-pill [pill]="tag" />
+      }
+    </div>
+    <app-pill
+      class="add-tag"
+      [pill]="{text:'+', color:'#348feb'}" />
+  </div>
+  <div class="resize-wrapper" (mousedown)="onResizeMouseDown()">
+    <svg>
+      <path
+        xmlns="http://www.w3.org/2000/svg"
+        d="M21 15L15 21M21 8L8 21"
+        stroke-width="1"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+    </svg>
+  </div>
+</div>

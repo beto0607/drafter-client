@@ -1,0 +1,10 @@
+@let _element = element();
+<div class="container" (click)="elementClicked.emit()">
+  <app-element-title [elementTitle]="_element.title"/>
+  <app-element-content [element]="_element"
+    (captionUpdated)="onCaptionUpdated($event)"
+  />
+  <app-element-footer [element]="_element"
+    (resizePressed)="resizePressed.emit()"
+  />
+</div>

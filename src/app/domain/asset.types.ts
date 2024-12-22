@@ -1,14 +1,26 @@
 import { WithId, WithTimestamp } from './misc.types';
 
-export type VideoTypes = 'mp4';
+export type LinkAssetType = 'youtube' | 'pinterest' | 'facebook' | 'instagram';
 
-export type ImageTypes = 'jpeg' | 'gif' | 'png' | 'webp';
+export type VideoAssetType = 'mp4';
 
-export type AudioTypes = 'acc' | 'mp3';
+export type ImageAssetType = 'jpeg' | 'gif' | 'png' | 'webp';
 
-export interface IAsset<Type = VideoTypes | ImageTypes | AudioTypes>
-  extends WithTimestamp,
-    WithId {
+export type AudioAssetType = 'acc' | 'mpeg' | 'ogg';
+
+export type OneOfAssetType =
+  | LinkAssetType
+  | VideoAssetType
+  | AudioAssetType
+  | ImageAssetType;
+
+export interface IAsset<Type = OneOfAssetType> extends WithTimestamp, WithId {
   url: string;
-  type: Type;
+  type: 'image' | 'video' | 'link' | 'audio';
+  extenstion: Type;
+  mimeType:
+    | `link`
+    | `video/${VideoAssetType}`
+    | `audio/${AudioAssetType}`
+    | `image/${ImageAssetType}`;
 }
