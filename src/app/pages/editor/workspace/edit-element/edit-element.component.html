@@ -1,0 +1,12 @@
+<dialog
+  #dialog
+>
+  @if(element(); as _element){
+    <div class="title">
+      <app-title-input
+        [value]="_element.title"
+        (valueChange)="onTitleChanged($event)"
+      />
+    </div>
+  }
+</dialog>

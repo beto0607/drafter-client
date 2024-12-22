@@ -11,6 +11,7 @@ import {
 import { IElement, IPosition } from '../../../domain';
 import { WorkspaceStateService } from '../../../state/workspace';
 import { SetElementsPositionType } from '../../../state/workspace/workspace.actions.types';
+import { EditElementComponent } from './edit-element/edit-element.component';
 import { ElementComponent } from './element/element.component';
 import {
   ELEMENT_MIN_HEIGHT,
@@ -22,7 +23,7 @@ import { WorkspaceResizeService } from './workspace-resize.service';
 
 @Component({
   selector: 'app-workspace',
-  imports: [ElementComponent],
+  imports: [ElementComponent, EditElementComponent],
   templateUrl: './workspace.component.html',
   styleUrl: './workspace.component.scss',
   providers: [WorkspaceResizeService, WorkspaceDrawerService],
@@ -35,6 +36,7 @@ export class WorkspaceComponent {
   private canvas = viewChild.required<ElementRef<HTMLCanvasElement>>('canvas');
 
   selectedElements = signal<IElement['id'][]>([]);
+  editingElementId = signal<IElement['id'] | undefined>(undefined);
 
   private updatedViewWhileMouseDown = false;
   private isResizing = false;
@@ -100,6 +102,15 @@ export class WorkspaceComponent {
     this.isResizing = true;
   }
 
+  onEditElement(element: IElement): void {
+    this.selectedElements.set([element.id]);
+    this.editingElementId.set(element.id);
+  }
+
+  onFisnishedEditing(): void {
+    this.editingElementId.set(undefined);
+  }
+
   onMouseUp(_event: MouseEvent): void {
     if (this.updatedViewWhileMouseDown) {
       this.selectedElements.set([]);
@@ -109,6 +120,10 @@ export class WorkspaceComponent {
   }
 
   onMouseMove(event: MouseEvent): void {
+    const editingElement = this.editingElementId();
+    if (editingElement) {
+      return;
+    }
     const selectedElements = this.selectedElements();
     if (!selectedElements.length || event.buttons !== 1) {
       return;

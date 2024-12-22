@@ -23,3 +23,8 @@ export const selectProjectName = createSelector(
   selectProject,
   (project) => project?.name ?? '',
 );
+
+export const selectElements = createSelector(
+  selectProject,
+  (project) => project?.elements,
+);

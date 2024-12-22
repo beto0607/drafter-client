@@ -26,6 +26,7 @@ export class ElementComponent {
 
   element = input.required<IElement>();
   elementClicked = output();
+  editElement = output();
   resizePressed = output();
 
   get top(): string {
@@ -50,5 +51,9 @@ export class ElementComponent {
       this.element().id,
       newCaption,
     );
+  }
+
+  onElementDoubleClicked(): void {
+    this.editElement.emit();
   }
 }

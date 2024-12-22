@@ -16,7 +16,12 @@
         [element]="element"
         (elementClicked)="onElementClicked(element)"
         (resizePressed)="onResizePressed(element)"
+        (editElement)="onEditElement(element)"
       />
     }
   </div>
 }
+
+<app-edit-element [elementId]="editingElementId()"
+  (finishedEditing)="onFisnishedEditing()"
+/>

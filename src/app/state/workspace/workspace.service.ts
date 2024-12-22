@@ -9,6 +9,7 @@ import {
 import { SetElementsPositionType } from './workspace.actions.types';
 import {
   selectBackgroundColor,
+  selectElements,
   selectError,
   selectLoaded,
   selectProject,
@@ -23,6 +24,7 @@ export class WorkspaceStateService {
   error = this.store.selectSignal(selectError);
 
   project = this.store.selectSignal(selectProject);
+  elements = this.store.selectSignal(selectElements);
 
   backgroundColor = this.store.selectSignal(selectBackgroundColor);
   projectName = this.store.selectSignal(selectProjectName);
@@ -62,6 +64,15 @@ export class WorkspaceStateService {
   ): void {
     this.store.dispatch(
       WorkspaceElementActions.setElementCaption({ elementId, newCaption }),
+    );
+  }
+
+  updateElementTitle(
+    elementId: IElement['id'],
+    newTitle: IElement['title'],
+  ): void {
+    this.store.dispatch(
+      WorkspaceElementActions.setElementTitle({ elementId, newTitle }),
     );
   }
 }

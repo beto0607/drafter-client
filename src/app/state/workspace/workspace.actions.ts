@@ -28,5 +28,9 @@ export const WorkspaceElementActions = createActionGroup({
       elementId: IElement['id'];
       newCaption: IElement['caption'];
     }>(),
+    'set element title': props<{
+      elementId: IElement['id'];
+      newTitle: IElement['title'];
+    }>(),
   },
 });

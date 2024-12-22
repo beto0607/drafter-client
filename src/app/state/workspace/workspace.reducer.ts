@@ -5,6 +5,7 @@ import {
   WorkspaceElementActions,
   WorkspaceProjectActions,
 } from './workspace.actions';
+import { updateElement } from './workspace.reducer.utils';
 
 export interface IWorkspaceState {
   loaded: boolean;
@@ -56,6 +57,7 @@ export const reducer = createReducer<IWorkspaceState>(
         : undefined,
     };
   }),
+
   on(WorkspaceProjectActions.setProjectName, (state, { newName }) => {
     return {
       ...state,
@@ -67,10 +69,12 @@ export const reducer = createReducer<IWorkspaceState>(
         : undefined,
     };
   }),
+
   on(WorkspaceElementActions.setElementsPosition, (state, { updates }) => {
     if (!state.project) {
       return state;
     }
+
     const updatedElements: IElement[] = state.project.elements.map(
       (element) => {
         const updateData = updates.find(
@@ -89,18 +93,21 @@ export const reducer = createReducer<IWorkspaceState>(
       },
     };
   }),
+
   on(
     WorkspaceElementActions.setElementSize,
     (state, { elementId, newSize }) => {
       if (!state.project) {
         return state;
       }
-      const updatedElements: IElement[] = state.project.elements.map(
-        (element) => {
-          const updateData = element.id === elementId;
-          return updateData ? { ...element, size: newSize } : element;
-        },
+
+      const updatedElements = updateElement(
+        state.project.elements,
+        elementId,
+        'size',
+        newSize,
       );
+
       return {
         ...state,
         project: {
@@ -110,18 +117,45 @@ export const reducer = createReducer<IWorkspaceState>(
       };
     },
   ),
+
   on(
     WorkspaceElementActions.setElementCaption,
     (state, { elementId, newCaption }) => {
       if (!state.project) {
         return state;
       }
-      const updatedElements: IElement[] = state.project.elements.map(
-        (element) => {
-          const updateData = element.id === elementId;
-          return updateData ? { ...element, caption: newCaption } : element;
-        },
+
+      const updatedElements = updateElement(
+        state.project.elements,
+        elementId,
+        'caption',
+        newCaption,
       );
+
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          elements: updatedElements,
+        },
+      };
+    },
+  ),
+
+  on(
+    WorkspaceElementActions.setElementTitle,
+    (state, { elementId, newTitle }) => {
+      if (!state.project) {
+        return state;
+      }
+
+      const updatedElements = updateElement(
+        state.project.elements,
+        elementId,
+        'title',
+        newTitle,
+      );
+
       return {
         ...state,
         project: {
