@@ -10,9 +10,14 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import showdown from 'showdown';
+import {
+  CarouselComponent,
+  CarouselItemDirective,
+} from '../../../../../components';
 import { IElement } from '../../../../../domain';
 
 @Component({
+  imports: [CarouselComponent, CarouselItemDirective],
   selector: 'app-element-content',
   styleUrl: './element-content.component.scss',
   templateUrl: './element-content.component.html',

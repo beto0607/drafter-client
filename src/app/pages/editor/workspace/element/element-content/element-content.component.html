@@ -1,22 +1,31 @@
 @let _element = element();
 <div class="wrapper">
-  @for(asset of _element.assets; track asset.id; let i = $index){
-    @switch(asset.type){
-      @case('image'){
-        <img [src]="asset.url" />
-      }
-      @case('video'){
-        <video controls>
-          <source [src]="asset.url" [type]="asset.mimeType" />
-        </video>
-      }
-      @case('audio'){
-        <audio controls>
-          <source [src]="asset.url" [type]="asset.mimeType" />
-        </audio>
+  <app-carousel>
+    @for(asset of _element.assets; track asset.id; let i = $index){
+      @switch(asset.type){
+        @case('image'){
+          <img
+            appCarouselItem
+            [src]="asset.url"
+          />
+        }
+        @case('video'){
+          <video
+            appCarouselItem
+            controls>
+            <source [src]="asset.url" [type]="asset.mimeType" />
+          </video>
+        }
+        @case('audio'){
+          <audio
+            appCarouselItem
+            controls>
+            <source [src]="asset.url" [type]="asset.mimeType" />
+          </audio>
+        }
       }
     }
-  }
+  </app-carousel>
   @if(caption(); as _caption){
     <div class="caption" #captionWrapper
       [innerHtml]="_caption">
