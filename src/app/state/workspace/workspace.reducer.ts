@@ -1,10 +1,19 @@
 import { createReducer, on } from '@ngrx/store';
 import { IElement, IProject } from '../../domain';
 import {
+  WorkspaceAssetActions,
   WorkspaceAsyncActions,
   WorkspaceElementActions,
   WorkspaceProjectActions,
+  WorkspaceTagsActions,
 } from './workspace.actions';
+import {
+  deleteTag,
+  duplicateAsset,
+  duplicateElement,
+  removeAsset,
+  updateElement,
+} from './workspace.reducer.utils';
 
 export interface IWorkspaceState {
   loaded: boolean;
@@ -46,31 +55,67 @@ export const reducer = createReducer<IWorkspaceState>(
   }),
 
   on(WorkspaceProjectActions.setBackgroundColor, (state, { newColor }) => {
+    if (!state.project) {
+      return state;
+    }
     return {
       ...state,
-      project: state.project
-        ? {
-            ...state.project,
-            backgroundColor: newColor,
-          }
-        : undefined,
+      project: {
+        ...state.project,
+        backgroundColor: newColor,
+      },
     };
   }),
+
   on(WorkspaceProjectActions.setProjectName, (state, { newName }) => {
+    if (!state.project) {
+      return state;
+    }
     return {
       ...state,
-      project: state.project
-        ? {
-            ...state.project,
-            name: newName,
-          }
-        : undefined,
+      project: {
+        ...state.project,
+        name: newName,
+      },
     };
   }),
+
+  on(WorkspaceProjectActions.deleteElement, (state, { elementId }) => {
+    if (!state.project) {
+      return state;
+    }
+    return {
+      ...state,
+      project: {
+        ...state.project,
+        elements: state.project.elements.filter(({ id }) => id !== elementId),
+      },
+    };
+  }),
+
+  on(WorkspaceProjectActions.duplicateElement, (state, { elementId }) => {
+    if (!state.project) {
+      return state;
+    }
+    const element = state.project.elements.find(({ id }) => elementId === id);
+    if (!element) {
+      return state;
+    }
+    const duplicatedElement = duplicateElement(element);
+    return {
+      ...state,
+      project: {
+        ...state.project,
+        elements: [...state.project.elements, duplicatedElement],
+      },
+    };
+  }),
+
   on(WorkspaceElementActions.setElementsPosition, (state, { updates }) => {
     if (!state.project) {
       return state;
     }
+
     const updatedElements: IElement[] = state.project.elements.map(
       (element) => {
         const updateData = updates.find(
@@ -89,18 +134,21 @@ export const reducer = createReducer<IWorkspaceState>(
       },
     };
   }),
+
   on(
     WorkspaceElementActions.setElementSize,
     (state, { elementId, newSize }) => {
       if (!state.project) {
         return state;
       }
-      const updatedElements: IElement[] = state.project.elements.map(
-        (element) => {
-          const updateData = element.id === elementId;
-          return updateData ? { ...element, size: newSize } : element;
-        },
+
+      const updatedElements = updateElement(
+        state.project.elements,
+        elementId,
+        'size',
+        newSize,
       );
+
       return {
         ...state,
         project: {
@@ -110,18 +158,21 @@ export const reducer = createReducer<IWorkspaceState>(
       };
     },
   ),
+
   on(
     WorkspaceElementActions.setElementCaption,
     (state, { elementId, newCaption }) => {
       if (!state.project) {
         return state;
       }
-      const updatedElements: IElement[] = state.project.elements.map(
-        (element) => {
-          const updateData = element.id === elementId;
-          return updateData ? { ...element, caption: newCaption } : element;
-        },
+
+      const updatedElements = updateElement(
+        state.project.elements,
+        elementId,
+        'caption',
+        newCaption,
       );
+
       return {
         ...state,
         project: {
@@ -131,4 +182,103 @@ export const reducer = createReducer<IWorkspaceState>(
       };
     },
   ),
+
+  on(
+    WorkspaceElementActions.setElementTitle,
+    (state, { elementId, newTitle }) => {
+      if (!state.project) {
+        return state;
+      }
+
+      const updatedElements = updateElement(
+        state.project.elements,
+        elementId,
+        'title',
+        newTitle,
+      );
+
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          elements: updatedElements,
+        },
+      };
+    },
+  ),
+
+  on(WorkspaceAssetActions.deleteAsset, (state, { elementId, assetId }) => {
+    if (!state.project) {
+      return state;
+    }
+    const updatedElements = removeAsset(
+      state.project.elements,
+      elementId,
+      assetId,
+    );
+    return {
+      ...state,
+      project: {
+        ...state.project,
+        elements: updatedElements,
+      },
+    };
+  }),
+  on(WorkspaceAssetActions.duplicateAsset, (state, { elementId, assetId }) => {
+    if (!state.project) {
+      return state;
+    }
+    const updatedElements = state.project.elements.map((element) =>
+      element.id !== elementId ? element : duplicateAsset(element, assetId),
+    );
+    return {
+      ...state,
+      project: {
+        ...state.project,
+        elements: updatedElements,
+      },
+    };
+  }),
+
+  on(WorkspaceTagsActions.deleteTag, (state, { elementId, tag }) => {
+    if (!state.project) {
+      return state;
+    }
+    const updatedElements = state.project.elements.map((element) =>
+      element.id !== elementId
+        ? element
+        : {
+            ...element,
+            tags: deleteTag(element.tags, tag),
+          },
+    );
+    return {
+      ...state,
+      project: {
+        ...state.project,
+        elements: updatedElements,
+      },
+    };
+  }),
+
+  on(WorkspaceTagsActions.addTag, (state, { elementId, tag }) => {
+    if (!state.project) {
+      return state;
+    }
+    const updatedElements = state.project.elements.map((element) =>
+      element.id !== elementId
+        ? element
+        : {
+            ...element,
+            tags: [...deleteTag(element.tags, tag), tag],
+          },
+    );
+    return {
+      ...state,
+      project: {
+        ...state.project,
+        elements: updatedElements,
+      },
+    };
+  }),
 );

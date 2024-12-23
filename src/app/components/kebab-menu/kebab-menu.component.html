@@ -1,0 +1,12 @@
+<div class="wrapper" #wrapper>
+  <button tabindex="0"
+    (click)="onButtonClicked()"
+    (keyup.espace)="onButtonClicked()"
+  >
+    <app-icon [icon]="'faEllipsisVertical'"/>
+  </button>
+  <div popover #popover>
+    <ng-content/>
+  </div>
+</div>
+

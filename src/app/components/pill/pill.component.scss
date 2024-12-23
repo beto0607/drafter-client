@@ -7,7 +7,20 @@
   border: 1px solid var(--bg-color, light-blue);
   cursor: pointer;
 
-  &:hover {
+  &:hover:not(:has(app-icon:hover)) {
     border-color: #00f;
+  }
+
+  app-icon {
+    margin-left: 8px;
+    padding: 0 4px;
+    background-color: var(--ui-bg-transparent);
+    border-radius: var(--ui-border-radius-normal);
+
+    border: 1px solid var(--bg-color, light-blue);
+
+    &:hover {
+      border-color: #00f;
+    }
   }
 }

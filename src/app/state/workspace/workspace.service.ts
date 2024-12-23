@@ -1,14 +1,17 @@
 import { inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { IElement, IProject } from '../../domain';
+import { IAsset, IElement, IProject, ITag } from '../../domain';
 import {
+  WorkspaceAssetActions,
   WorkspaceAsyncActions,
   WorkspaceElementActions,
   WorkspaceProjectActions,
+  WorkspaceTagsActions,
 } from './workspace.actions';
 import { SetElementsPositionType } from './workspace.actions.types';
 import {
   selectBackgroundColor,
+  selectElements,
   selectError,
   selectLoaded,
   selectProject,
@@ -23,6 +26,7 @@ export class WorkspaceStateService {
   error = this.store.selectSignal(selectError);
 
   project = this.store.selectSignal(selectProject);
+  elements = this.store.selectSignal(selectElements);
 
   backgroundColor = this.store.selectSignal(selectBackgroundColor);
   projectName = this.store.selectSignal(selectProjectName);
@@ -39,6 +43,16 @@ export class WorkspaceStateService {
 
   setProjectName(newName: IProject['name']): void {
     this.store.dispatch(WorkspaceProjectActions.setProjectName({ newName }));
+  }
+
+  deleteElement(elementId: IElement['id']): void {
+    this.store.dispatch(WorkspaceProjectActions.deleteElement({ elementId }));
+  }
+
+  duplicateElement(elementId: IElement['id']): void {
+    this.store.dispatch(
+      WorkspaceProjectActions.duplicateElement({ elementId }),
+    );
   }
 
   updateElementsPosition(updates: SetElementsPositionType): void {
@@ -63,5 +77,40 @@ export class WorkspaceStateService {
     this.store.dispatch(
       WorkspaceElementActions.setElementCaption({ elementId, newCaption }),
     );
+  }
+
+  updateElementTitle(
+    elementId: IElement['id'],
+    newTitle: IElement['title'],
+  ): void {
+    this.store.dispatch(
+      WorkspaceElementActions.setElementTitle({ elementId, newTitle }),
+    );
+  }
+
+  deleteAssetFromElement(
+    elementId: IElement['id'],
+    assetId: IAsset['id'],
+  ): void {
+    this.store.dispatch(
+      WorkspaceAssetActions.deleteAsset({ elementId, assetId }),
+    );
+  }
+
+  duplicateAssetInElement(
+    elementId: IElement['id'],
+    assetId: IAsset['id'],
+  ): void {
+    this.store.dispatch(
+      WorkspaceAssetActions.duplicateAsset({ elementId, assetId }),
+    );
+  }
+
+  addTagFromElement(elementId: IElement['id'], tag: ITag): void {
+    this.store.dispatch(WorkspaceTagsActions.addTag({ elementId, tag }));
+  }
+
+  deleteTagFromElement(elementId: IElement['id'], tag: ITag): void {
+    this.store.dispatch(WorkspaceTagsActions.deleteTag({ elementId, tag }));
   }
 }

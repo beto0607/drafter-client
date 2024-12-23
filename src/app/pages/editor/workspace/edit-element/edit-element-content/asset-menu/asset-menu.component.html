@@ -1,0 +1,29 @@
+<app-kebab-menu
+  #menu
+>
+  <div appKebabItem
+    (click)="onDuplicateAssetClicked()"
+    (keyup.enter)="onDuplicateAssetClicked()"
+    (keyup.space)="onDuplicateAssetClicked()"
+  >
+    <app-icon [icon]="'faCopy'"/>
+    Duplicate
+  </div>
+  <div appKebabItem
+    (click)="onCopyLinkClicked()"
+    (keyup.enter)="onCopyLinkClicked()"
+    (keyup.space)="onCopyLinkClicked()"
+  >
+    <app-icon [icon]="'faExternalLink'"/>
+    Copy link
+  </div>
+  <hr appKebabSeparator/>
+  <div appKebabItem class="delete-option"
+    (click)="onDeleteAssetClicked()"
+    (keyup.enter)="onDeleteAssetClicked()"
+    (keyup.space)="onDeleteAssetClicked()"
+  >
+    <app-icon [icon]="'faRemove'"/>
+    Delete
+  </div>
+</app-kebab-menu>

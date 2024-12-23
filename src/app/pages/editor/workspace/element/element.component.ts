@@ -26,7 +26,14 @@ export class ElementComponent {
 
   element = input.required<IElement>();
   elementClicked = output();
+  editElement = output();
   resizePressed = output();
+
+  constructor() {
+    setTimeout(() => {
+      this.editElement.emit();
+    }, 1000);
+  }
 
   get top(): string {
     return this.element().position.y + 'px';
@@ -50,5 +57,9 @@ export class ElementComponent {
       this.element().id,
       newCaption,
     );
+  }
+
+  onElementDoubleClicked(): void {
+    this.editElement.emit();
   }
 }
