@@ -1,0 +1,41 @@
+<div class="wrapper">
+  <ul>
+    @let _element = element();
+    @for(asset of _element.assets; track asset.id; let i = $index){
+      <li>
+        <span class="number">{{i+1}}</span>
+        @switch(asset.type){
+          @case('image'){
+            <img
+              appCarouselItem
+              [src]="asset.url"
+            />
+          }
+          @case('video'){
+            <video
+              appCarouselItem
+              controls>
+              <source [src]="asset.url" [type]="asset.mimeType" />
+            </video>
+          }
+          @case('audio'){
+            <audio
+              appCarouselItem
+              controls>
+              <source [src]="asset.url" [type]="asset.mimeType" />
+            </audio>
+          }
+        }
+
+        <app-asset-menu
+          [elementId]="_element.id"
+          [asset]="asset"
+        />
+      </li>
+    }
+    <li>
+      <span class="number">{{_element.assets.length+1}}</span>
+      <app-icon [icon]="'faPlus'"/>
+    </li>
+  </ul>
+</div>

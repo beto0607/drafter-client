@@ -1,8 +1,8 @@
 .wrapper {
   button {
     background-color: transparent;
-    width: 24px;
-    height: 24px;
+    width: var(--menu-size, 24px);
+    height: var(--menu-size, 24px);
     border: none;
     outline: 1px solid transparent;
 

@@ -1,7 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { IElement, IProject } from '../../domain';
+import { IAsset, IElement, IProject } from '../../domain';
 import {
+  WorkspaceAssetActions,
   WorkspaceAsyncActions,
   WorkspaceElementActions,
   WorkspaceProjectActions,
@@ -43,6 +44,16 @@ export class WorkspaceStateService {
     this.store.dispatch(WorkspaceProjectActions.setProjectName({ newName }));
   }
 
+  deleteElement(elementId: IElement['id']): void {
+    this.store.dispatch(WorkspaceProjectActions.deleteElement({ elementId }));
+  }
+
+  duplicateElement(elementId: IElement['id']): void {
+    this.store.dispatch(
+      WorkspaceProjectActions.duplicateElement({ elementId }),
+    );
+  }
+
   updateElementsPosition(updates: SetElementsPositionType): void {
     this.store.dispatch(
       WorkspaceElementActions.setElementsPosition({ updates }),
@@ -73,6 +84,24 @@ export class WorkspaceStateService {
   ): void {
     this.store.dispatch(
       WorkspaceElementActions.setElementTitle({ elementId, newTitle }),
+    );
+  }
+
+  deleteAssetFromElement(
+    elementId: IElement['id'],
+    assetId: IAsset['id'],
+  ): void {
+    this.store.dispatch(
+      WorkspaceAssetActions.deleteAsset({ elementId, assetId }),
+    );
+  }
+
+  duplicateAssetInElement(
+    elementId: IElement['id'],
+    assetId: IAsset['id'],
+  ): void {
+    this.store.dispatch(
+      WorkspaceAssetActions.duplicateAsset({ elementId, assetId }),
     );
   }
 }

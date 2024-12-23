@@ -4,19 +4,16 @@ import {
   ElementRef,
   viewChild,
 } from '@angular/core';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+import { IconComponent } from '../icon/icon.component';
 import { KebabItemDirective } from './kebab-item.directive';
 
 @Component({
-  imports: [FaIconComponent],
+  imports: [IconComponent],
   selector: 'app-kebab-menu',
   templateUrl: './kebab-menu.component.html',
   styleUrl: './kebab-menu.component.scss',
 })
 export class KebabMenuComponent {
-  faKebabMenu = faEllipsisVertical;
-
   private content = contentChildren(KebabItemDirective);
 
   private wrapper = viewChild.required<ElementRef<HTMLDivElement>>('wrapper');
@@ -28,6 +25,10 @@ export class KebabMenuComponent {
     }
     this.setPopoverPosition();
     this.popover().nativeElement.showPopover();
+  }
+
+  close(): void {
+    this.popover().nativeElement.hidePopover();
   }
 
   private setPopoverPosition(): void {

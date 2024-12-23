@@ -1,9 +1,8 @@
 import { Component, input, output, signal } from '@angular/core';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { IconComponent } from '../icon/icon.component';
 
 @Component({
-  imports: [FaIconComponent],
+  imports: [IconComponent],
   selector: 'app-title-input',
   templateUrl: './title-input.component.html',
   styleUrl: './title-input.component.scss',
@@ -15,7 +14,6 @@ export class TitleInputComponent {
 
   valueChange = output<string>();
 
-  editIcon = faPen;
   isEditing = signal(false);
 
   onClick(): void {

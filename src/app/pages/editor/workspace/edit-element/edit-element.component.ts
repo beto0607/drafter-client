@@ -11,9 +11,17 @@ import {
 import { TitleInputComponent } from '../../../../components';
 import { IElement } from '../../../../domain';
 import { WorkspaceStateService } from '../../../../state/workspace';
+import { ElementContentComponent } from '../element/element-content/element-content.component';
+import { EditElementMenuComponent } from './edit-element-menu/edit-element-menu.component';
+import { EditElementContentComponent } from './edit-element-content/edit-element-content.component';
 
 @Component({
-  imports: [TitleInputComponent],
+  imports: [
+    EditElementContentComponent,
+    TitleInputComponent,
+    ElementContentComponent,
+    EditElementMenuComponent,
+  ],
   selector: 'app-edit-element',
   templateUrl: './edit-element.component.html',
   styleUrl: './edit-element.component.scss',
@@ -31,8 +39,8 @@ export class EditElementComponent {
 
   constructor() {
     effect(() => {
-      const elementId = this.elementId();
-      if (!elementId) {
+      const element = this.element();
+      if (!element) {
         this.closeDialog();
         return;
       }
@@ -47,6 +55,14 @@ export class EditElementComponent {
     }
 
     this.workspaceStateService.updateElementTitle(elementId, newTitle);
+  }
+  onCaptionUpdated(newCaption: string): void {
+    const elementId = this.elementId();
+    if (!elementId) {
+      return;
+    }
+
+    this.workspaceStateService.updateElementCaption(elementId, newCaption);
   }
 
   private showDialog(): void {

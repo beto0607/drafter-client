@@ -9,4 +9,9 @@
   --ui-element-title-size: 12px;
 
   --ui-outline-focus: 1px solid #888;
+
+  --ui-border-radius-normal: 2px;
+  --ui-border-normal: 1px solid var(--ui-element-border-color);
+  --ui-bg-transparent: rgba(0, 0, 0, 0.25);
+  --ui-bg-transparent-light: rgba(200, 200, 200, 0.25);
 }

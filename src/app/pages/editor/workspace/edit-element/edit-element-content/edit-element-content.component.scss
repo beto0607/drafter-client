@@ -1,0 +1,64 @@
+.wrapper {
+  ul {
+    display: flex;
+    justify-content: flex-start;
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    flex-wrap: wrap;
+
+    li {
+      background-color: var(--ui-bg-transparent-light);
+      border-radius: var(--ui-border-radius-normal);
+      width: 150px;
+      height: 150px;
+      overflow: hidden;
+      margin: 4px;
+      border: var(--ui-border-normal);
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      & > * {
+        max-width: 100%;
+        margin: auto;
+      }
+
+      .number {
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        left: 0px;
+        background-color: var(--ui-bg-transparent);
+        padding: 2px 4px;
+        font-size: 12px;
+        text-align: center;
+        height: 16px;
+        color: white;
+        border-right: var(--ui-border-normal);
+        border-bottom: var(--ui-border-normal);
+        border-top-left-radius: var(--ui-border-radius-normal);
+        border-bottom-right-radius: var(--ui-border-radius-normal);
+      }
+
+      app-asset-menu {
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        right: 0px;
+        background-color: var(--ui-bg-transparent);
+        // padding: 2px 4px;
+        font-size: 12px;
+        text-align: center;
+        height: 20px;
+        --menu-size: 16px;
+        --ui-icon-color: white;
+        color: white;
+        border-left: var(--ui-border-normal);
+        border-bottom: var(--ui-border-normal);
+        border-top-right-radius: var(--ui-border-radius-normal);
+        border-bottom-left-radius: var(--ui-border-radius-normal);
+      }
+    }
+  }
+}

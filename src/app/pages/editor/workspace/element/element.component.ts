@@ -29,6 +29,12 @@ export class ElementComponent {
   editElement = output();
   resizePressed = output();
 
+  constructor() {
+    setTimeout(() => {
+      this.editElement.emit();
+    }, 1000);
+  }
+
   get top(): string {
     return this.element().position.y + 'px';
   }

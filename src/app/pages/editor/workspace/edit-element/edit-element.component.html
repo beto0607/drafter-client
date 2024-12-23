@@ -2,11 +2,19 @@
   #dialog
 >
   @if(element(); as _element){
-    <div class="title">
+    <div class="header">
       <app-title-input
         [value]="_element.title"
         (valueChange)="onTitleChanged($event)"
       />
+      <app-edit-element-menu
+        [element]="_element"
+      />
     </div>
+    <div class="content">
+      <app-edit-element-content [element]="_element"/>
+    </div>
+    <div class="caption"></div>
+    <div class="tags"></div>
   }
 </dialog>
