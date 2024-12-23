@@ -1,11 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { IAsset, IElement, IProject } from '../../domain';
+import { IAsset, IElement, IProject, ITag } from '../../domain';
 import {
   WorkspaceAssetActions,
   WorkspaceAsyncActions,
   WorkspaceElementActions,
   WorkspaceProjectActions,
+  WorkspaceTagsActions,
 } from './workspace.actions';
 import { SetElementsPositionType } from './workspace.actions.types';
 import {
@@ -103,5 +104,13 @@ export class WorkspaceStateService {
     this.store.dispatch(
       WorkspaceAssetActions.duplicateAsset({ elementId, assetId }),
     );
+  }
+
+  addTagFromElement(elementId: IElement['id'], tag: ITag): void {
+    this.store.dispatch(WorkspaceTagsActions.addTag({ elementId, tag }));
+  }
+
+  deleteTagFromElement(elementId: IElement['id'], tag: ITag): void {
+    this.store.dispatch(WorkspaceTagsActions.deleteTag({ elementId, tag }));
   }
 }

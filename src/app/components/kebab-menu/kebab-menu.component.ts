@@ -23,8 +23,8 @@ export class KebabMenuComponent {
     if (!this.content().length) {
       return;
     }
-    this.setPopoverPosition();
     this.popover().nativeElement.showPopover();
+    this.setPopoverPosition();
   }
 
   close(): void {
@@ -32,11 +32,24 @@ export class KebabMenuComponent {
   }
 
   private setPopoverPosition(): void {
+    const innerHeight = window.innerHeight;
+    const innerWidth = window.innerWidth;
     const wrapper = this.wrapper().nativeElement;
     const popover = this.popover().nativeElement;
 
+    const popoverRect = popover.getBoundingClientRect();
     const { x, y } = wrapper.getBoundingClientRect();
-    popover.style.left = `${x}px`;
-    popover.style.top = `${y}px`;
+
+    if (x + popoverRect.width >= innerWidth) {
+      popover.style.left = `${x - popoverRect.width}px`;
+    } else {
+      popover.style.left = `${x}px`;
+    }
+
+    if (y + popoverRect.height >= innerHeight) {
+      popover.style.top = `${y - popoverRect.height}px`;
+    } else {
+      popover.style.top = `${y}px`;
+    }
   }
 }

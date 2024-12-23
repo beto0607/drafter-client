@@ -1,4 +1,4 @@
-import { IAsset, IElement } from '../../domain';
+import { IAsset, IElement, ITag } from '../../domain';
 
 export function updateElement(
   elements: IElement[],
@@ -51,4 +51,11 @@ export function duplicateAsset(
       },
     ],
   };
+}
+
+export function deleteTag(tags: ITag[], tag: ITag): ITag[] {
+  return tags.filter(
+    (currentTag) =>
+      !(currentTag.color === tag.color && currentTag.text === tag.text),
+  );
 }

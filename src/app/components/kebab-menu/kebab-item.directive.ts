@@ -9,5 +9,6 @@ export class KebabItemDirective {
 
   constructor() {
     this.elementRef.nativeElement.setAttribute('tabindex', '0');
+    this.elementRef.nativeElement.style.cursor = 'pointer';
   }
 }

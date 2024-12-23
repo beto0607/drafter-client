@@ -12,20 +12,29 @@
   }
 
   div[popover] {
+    font-size: 16px;
     position: absolute;
     inset: unset;
     z-index: 100;
     top: 0;
-    left: 0;
+    left: -300px;
+    min-width: 200px;
+    text-align: left;
 
     &:popover-open {
       display: block;
     }
 
-    .appKebabSeparator {
-      width: 100%;
-      padding: 0;
-      border: 2px solid red;
+    ::ng-deep {
+      [appKebabItem] {
+        padding-top: 2px;
+        padding-bottom: 2px;
+        width: 100%;
+      }
+
+      [appKebabSeparator] {
+        width: 100%;
+      }
     }
   }
 

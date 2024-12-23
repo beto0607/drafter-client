@@ -5,8 +5,10 @@ import {
   WorkspaceAsyncActions,
   WorkspaceElementActions,
   WorkspaceProjectActions,
+  WorkspaceTagsActions,
 } from './workspace.actions';
 import {
+  deleteTag,
   duplicateAsset,
   duplicateElement,
   removeAsset,
@@ -228,6 +230,48 @@ export const reducer = createReducer<IWorkspaceState>(
     }
     const updatedElements = state.project.elements.map((element) =>
       element.id !== elementId ? element : duplicateAsset(element, assetId),
+    );
+    return {
+      ...state,
+      project: {
+        ...state.project,
+        elements: updatedElements,
+      },
+    };
+  }),
+
+  on(WorkspaceTagsActions.deleteTag, (state, { elementId, tag }) => {
+    if (!state.project) {
+      return state;
+    }
+    const updatedElements = state.project.elements.map((element) =>
+      element.id !== elementId
+        ? element
+        : {
+            ...element,
+            tags: deleteTag(element.tags, tag),
+          },
+    );
+    return {
+      ...state,
+      project: {
+        ...state.project,
+        elements: updatedElements,
+      },
+    };
+  }),
+
+  on(WorkspaceTagsActions.addTag, (state, { elementId, tag }) => {
+    if (!state.project) {
+      return state;
+    }
+    const updatedElements = state.project.elements.map((element) =>
+      element.id !== elementId
+        ? element
+        : {
+            ...element,
+            tags: [...deleteTag(element.tags, tag), tag],
+          },
     );
     return {
       ...state,

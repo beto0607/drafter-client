@@ -3,4 +3,9 @@
   (click)="onPillClicked($event)"
   [style]="'--bg-color:' + _pill.color">
   <span>{{_pill.text}}</span>
+  @if(deletable()){
+    <app-icon [icon]="'faRemove'"
+      (click)="onDeletePillClicked($event)"
+    />
+  }
 </div>

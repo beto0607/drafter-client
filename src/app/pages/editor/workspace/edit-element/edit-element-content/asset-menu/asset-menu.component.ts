@@ -7,6 +7,7 @@ import {
 } from '../../../../../../components';
 import { IElement } from '../../../../../../domain';
 import { WorkspaceStateService } from '../../../../../../state/workspace';
+import { copyURLToClipboard } from '../../../../../../utils';
 
 @Component({
   selector: 'app-asset-menu',
@@ -32,18 +33,24 @@ export class AssetMenuComponent {
 
   constructor() {
     effect(() => {
-      const _elements = this.workspaceStateService.elements();
+      this.workspaceStateService.elements();
       this.menu().close();
     });
   }
+
   onDuplicateAssetClicked(): void {
     const elementId = this.elementId();
     const assetId = this.asset().id;
     this.workspaceStateService.duplicateAssetInElement(elementId, assetId);
   }
 
-  onCopyLinkClicked(): void {
-    console.log('onCopyLinkClicked');
+  async onCopyLinkClicked(): Promise<void> {
+    const asset = this.asset();
+    try {
+      await copyURLToClipboard(asset.url);
+    } catch (e) {
+      console.error("Couldn't copy url", e);
+    }
   }
 
   onDeleteAssetClicked(): void {

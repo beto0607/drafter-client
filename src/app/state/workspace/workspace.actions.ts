@@ -1,5 +1,12 @@
 import { createActionGroup, props } from '@ngrx/store';
-import { HexColor, IAsset, IElement, IProject, ISize } from '../../domain';
+import {
+  HexColor,
+  IAsset,
+  IElement,
+  IProject,
+  ISize,
+  ITag,
+} from '../../domain';
 import { SetElementsPositionType } from './workspace.actions.types';
 
 export const WorkspaceAsyncActions = createActionGroup({
@@ -36,6 +43,7 @@ export const WorkspaceElementActions = createActionGroup({
     }>(),
   },
 });
+
 export const WorkspaceAssetActions = createActionGroup({
   source: 'workspaceAssets',
   events: {
@@ -47,5 +55,13 @@ export const WorkspaceAssetActions = createActionGroup({
       elementId: IElement['id'];
       assetId: IAsset['id'];
     }>(),
+  },
+});
+
+export const WorkspaceTagsActions = createActionGroup({
+  source: 'workspaceTags',
+  events: {
+    'delete tag': props<{ elementId: IElement['id']; tag: ITag }>(),
+    'add tag': props<{ elementId: IElement['id']; tag: ITag }>(),
   },
 });

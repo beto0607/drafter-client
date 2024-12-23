@@ -1,0 +1,12 @@
+@let _element = element();
+<div clas="wrapper">
+  @for(tag of _element.tags; track tag){
+    <app-pill [pill]="tag"
+      [deletable]="true"
+      (pillDeleteClicked)="onDeleteTagClicked(tag)"
+    />
+  }
+    <app-pill
+      class="add-tag"
+      [pill]="{text:'+', color:'#348feb'}" />
+</div>
