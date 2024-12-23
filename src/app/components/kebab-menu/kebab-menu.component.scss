@@ -1,0 +1,35 @@
+.wrapper {
+  button {
+    background-color: transparent;
+    width: 24px;
+    height: 24px;
+    border: none;
+    outline: 1px solid transparent;
+
+    &:focus {
+      outline: var(--ui-outline-focus);
+    }
+  }
+
+  div[popover] {
+    position: absolute;
+    inset: unset;
+    z-index: 100;
+    top: 0;
+    left: 0;
+
+    &:popover-open {
+      display: block;
+    }
+
+    .appKebabSeparator {
+      width: 100%;
+      padding: 0;
+      border: 2px solid red;
+    }
+  }
+
+  ::backdrop {
+    backdrop-filter: blur(3px) grayscale(100%);
+  }
+}

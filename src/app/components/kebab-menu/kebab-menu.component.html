@@ -1,0 +1,12 @@
+<div class="wrapper" #wrapper>
+  <button tabindex="0"
+    (click)="onButtonClicked()"
+    (keyup.espace)="onButtonClicked()"
+  >
+    <fa-icon [icon]="faKebabMenu"/>
+  </button>
+  <div popover #popover>
+    <ng-content/>
+  </div>
+</div>
+
