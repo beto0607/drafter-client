@@ -19,12 +19,15 @@ export interface IWorkspaceState {
   loaded: boolean;
   error: unknown | undefined;
   project: IProject | undefined;
+
+  originalChecksum: string | undefined;
 }
 
 const initialState: IWorkspaceState = {
   error: undefined,
   loaded: false,
   project: undefined,
+  originalChecksum: undefined,
 };
 export const WORKSPACE_FEATURE_KEY = 'workspace';
 
@@ -51,6 +54,13 @@ export const reducer = createReducer<IWorkspaceState>(
       loaded: true,
       error,
       project: undefined,
+    };
+  }),
+
+  on(WorkspaceProjectActions.setChecksum, (state, { newChecksum }) => {
+    return {
+      ...state,
+      originalChecksum: newChecksum,
     };
   }),
 

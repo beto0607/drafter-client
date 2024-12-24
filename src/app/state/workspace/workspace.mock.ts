@@ -71,7 +71,7 @@ export const mockedElements: IElement[] = [
 ];
 export const mockedProject: IProject = {
   ...mockedTimestamps(),
-  id: '81b3e7e9-f020-40ac-ab5f-da7607e9cb62',
+  id: '',
   name: 'TestProject',
   backgroundColor: '#cccccc',
   elements: mockedElements,

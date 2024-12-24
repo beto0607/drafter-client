@@ -11,9 +11,11 @@ import {
 import { SetElementsPositionType } from './workspace.actions.types';
 import {
   selectBackgroundColor,
+  selectCurrentChecksum,
   selectElements,
   selectError,
   selectLoaded,
+  selectOriginalChecksum,
   selectProject,
   selectProjectName,
 } from './workspace.selectors';
@@ -25,6 +27,9 @@ export class WorkspaceStateService {
   loaded = this.store.selectSignal(selectLoaded);
   error = this.store.selectSignal(selectError);
 
+  originalChecksum = this.store.selectSignal(selectOriginalChecksum);
+  currentChecksum = this.store.selectSignal(selectCurrentChecksum);
+
   project = this.store.selectSignal(selectProject);
   elements = this.store.selectSignal(selectElements);
 
@@ -33,6 +38,10 @@ export class WorkspaceStateService {
 
   loadProject(id: IProject['id'] | undefined): void {
     this.store.dispatch(WorkspaceAsyncActions.load({ id }));
+  }
+
+  saveProject(): void {
+    this.store.dispatch(WorkspaceAsyncActions.save());
   }
 
   setBackgroundColor(newColor: IProject['backgroundColor']): void {

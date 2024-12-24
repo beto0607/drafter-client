@@ -31,7 +31,7 @@ export class ElementComponent {
 
   constructor() {
     setTimeout(() => {
-      this.editElement.emit();
+      // this.editElement.emit();
     }, 1000);
   }
 

@@ -9,9 +9,10 @@ import {
 import { ColorPickerComponent } from '../../../components/color-picker/color-picker.component';
 import { HexColor } from '../../../domain';
 import { WorkspaceStateService } from '../../../state/workspace';
+import { SaveButtonComponent } from './save-button/save-button.component';
 
 @Component({
-  imports: [FaIconComponent, ColorPickerComponent],
+  imports: [FaIconComponent, ColorPickerComponent, SaveButtonComponent],
   selector: 'app-project-tools',
   templateUrl: './project-tools.component.html',
   styleUrl: './project-tools.component.scss',
