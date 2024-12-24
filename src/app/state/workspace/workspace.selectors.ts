@@ -1,4 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { getChecksum } from '../../utils';
 import { IWorkspaceState, WORKSPACE_FEATURE_KEY } from './workspace.reducer';
 
 const selectState = createFeatureSelector<IWorkspaceState>(
@@ -27,4 +28,14 @@ export const selectProjectName = createSelector(
 export const selectElements = createSelector(
   selectProject,
   (project) => project?.elements,
+);
+
+export const selectOriginalChecksum = createSelector(
+  selectState,
+  ({ originalChecksum }) => originalChecksum,
+);
+
+export const selectCurrentChecksum = createSelector(
+  selectProject,
+  (project) => project && getChecksum(project),
 );

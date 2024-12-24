@@ -13,4 +13,14 @@ export class WorkspaceDataService {
     const url = `${this.API_URL}/projects/${id}`;
     return this.httpClient.get<IProject>(url);
   }
+
+  saveProject(id: IProject['id'], project: IProject): Observable<IProject> {
+    const url = `${this.API_URL}/projects/${id}`;
+    return this.httpClient.put<IProject>(url, { data: project });
+  }
+
+  createProject(project: IProject): Observable<IProject> {
+    const url = `${this.API_URL}/projects`;
+    return this.httpClient.post<IProject>(url, { data: project });
+  }
 }

@@ -1,0 +1,8 @@
+<button
+  (click)="onSaveButtonClicked()"
+  (keyup.space)="onSaveButtonClicked()"
+  (keyup.enter)="onSaveButtonClicked()"
+  [class.is-dirty]="isProjectDirty()"
+>
+  <app-icon [icon]="'faSave'" />
+</button>

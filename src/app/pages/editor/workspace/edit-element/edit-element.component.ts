@@ -11,7 +11,6 @@ import {
 import { TitleInputComponent } from '../../../../components';
 import { IElement } from '../../../../domain';
 import { WorkspaceStateService } from '../../../../state/workspace';
-import { ElementContentComponent } from '../element/element-content/element-content.component';
 import { EditElementContentComponent } from './edit-element-content/edit-element-content.component';
 import { EditElementMenuComponent } from './edit-element-menu/edit-element-menu.component';
 import { EditElementTagsComponent } from './edit-element-tags/edit-element-tags.component';
@@ -20,7 +19,6 @@ import { EditElementTagsComponent } from './edit-element-tags/edit-element-tags.
   imports: [
     EditElementContentComponent,
     TitleInputComponent,
-    ElementContentComponent,
     EditElementTagsComponent,
     EditElementMenuComponent,
   ],

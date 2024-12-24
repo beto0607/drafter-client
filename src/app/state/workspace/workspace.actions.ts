@@ -1,4 +1,4 @@
-import { createActionGroup, props } from '@ngrx/store';
+import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import {
   HexColor,
   IAsset,
@@ -15,6 +15,10 @@ export const WorkspaceAsyncActions = createActionGroup({
     load: props<{ id: string | undefined }>(),
     loadSuccess: props<{ project: IProject }>(),
     loadFailure: props<{ error: unknown }>(),
+
+    save: emptyProps(),
+    'save success': props<{ project: IProject }>(),
+    'save failure': props<{ error: unknown }>(),
   },
 });
 
@@ -25,6 +29,7 @@ export const WorkspaceProjectActions = createActionGroup({
     'set background color': props<{ newColor: HexColor }>(),
     'delete element': props<{ elementId: IElement['id'] }>(),
     'duplicate element': props<{ elementId: IElement['id'] }>(),
+    'set checksum': props<{ newChecksum: string }>(),
   },
 });
 

@@ -1,0 +1,19 @@
+button {
+  outline: none;
+  border: none;
+  background: transparent;
+
+  cursor: initial;
+
+  app-icon {
+    --ui-icon-color: rgba(0, 0, 0, 0.2);
+  }
+
+  &.is-dirty {
+    cursor: pointer;
+
+    app-icon {
+      --ui-icon-color: #000;
+    }
+  }
+}
