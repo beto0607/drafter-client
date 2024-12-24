@@ -11,6 +11,7 @@ import {
 import { IElement, IPosition } from '../../../domain';
 import { WorkspaceStateService } from '../../../state/workspace';
 import { SetElementsPositionType } from '../../../state/workspace/workspace.actions.types';
+import { DrawingCanvasComponent } from './drawing-canvas';
 import { EditElementComponent } from './edit-element/edit-element.component';
 import { ElementComponent } from './element/element.component';
 import {
@@ -23,7 +24,7 @@ import { WorkspaceResizeService } from './workspace-resize.service';
 
 @Component({
   selector: 'app-workspace',
-  imports: [ElementComponent, EditElementComponent],
+  imports: [ElementComponent, EditElementComponent, DrawingCanvasComponent],
   templateUrl: './workspace.component.html',
   styleUrl: './workspace.component.scss',
   providers: [WorkspaceResizeService, WorkspaceDrawerService],
