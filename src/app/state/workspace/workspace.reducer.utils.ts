@@ -1,4 +1,5 @@
 import { IAsset, IElement, ITag } from '../../domain';
+import { uuidv4 } from '../../utils';
 
 export function updateElement(
   elements: IElement[],
@@ -14,7 +15,7 @@ export function updateElement(
 export function duplicateElement(element: IElement): IElement {
   return {
     ...element,
-    id: 'f3536c1b-cf17-4370-a2e3-894f2c35c3a3',
+    id: uuidv4(),
   };
 }
 
@@ -47,7 +48,7 @@ export function duplicateAsset(
       ...element.assets,
       {
         ...asset,
-        id: 'f685a523-5dea-407a-b169-a6f562e5b4f4',
+        id: uuidv4(),
       },
     ],
   };
