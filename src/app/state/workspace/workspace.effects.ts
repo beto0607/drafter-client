@@ -78,7 +78,6 @@ export class WorkspaceEffectsService {
       ),
       switchMap(({ project }) => {
         const newChecksum = getChecksum(project);
-        console.log(newChecksum);
         return of(WorkspaceProjectActions.setChecksum({ newChecksum }));
       }),
     );

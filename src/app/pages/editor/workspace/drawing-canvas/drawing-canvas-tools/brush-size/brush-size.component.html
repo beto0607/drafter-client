@@ -1,0 +1,5 @@
+<app-slider [minValue]="1" [maxValue]="30"
+  [disabled]="isDisabled()"
+  [value]="currentSize()"
+  (valueChanged)="onPencilSizeChanged($event)"
+/>

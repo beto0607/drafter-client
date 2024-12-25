@@ -10,7 +10,11 @@ import { HexColor } from '../../domain';
 
 @Component({
   selector: 'app-color-picker',
-  templateUrl: './color-picker.component.html',
+  template: `<input
+    type="color"
+    [value]="currentColor()"
+    (input)="onColorChanged($event)"
+  />`,
   styleUrl: './color-picker.component.scss',
 })
 export class ColorPickerComponent {

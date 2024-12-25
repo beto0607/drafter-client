@@ -56,16 +56,25 @@ export class DrawingCanvasComponent implements AfterViewInit {
   }
 
   onMouseDown(event: MouseEvent): void {
+    if ((event.target as HTMLElement).tagName !== 'CANVAS') {
+      return;
+    }
     event.preventDefault();
     this.drawingCanvasService.onMouseDown(event);
   }
 
   onMouseUp(event: MouseEvent): void {
+    if ((event.target as HTMLElement).tagName !== 'CANVAS') {
+      return;
+    }
     event.preventDefault();
     this.drawingCanvasService.onMouseUp(event);
   }
 
   onMouseMove(event: MouseEvent): void {
+    if ((event.target as HTMLElement).tagName !== 'CANVAS') {
+      return;
+    }
     event.preventDefault();
     this.drawingCanvasService.onMouseMove(event);
   }

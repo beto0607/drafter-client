@@ -28,6 +28,10 @@ export class DrawingCanvasService {
     this._currentTool.set(newTool);
   }
 
+  setCurrentSize(newSize: number): void {
+    this._currentSize.set(newSize);
+  }
+
   setCanvas(canvas: HTMLCanvasElement): void {
     this.canvas = canvas;
     const canvasCtx = canvas.getContext('2d');

@@ -3,13 +3,21 @@ import {
   ColorPickerComponent,
   IconComponent,
   SelectableIconButtonComponent,
+  SliderComponent,
 } from '../../../../../components';
+import { HexColor } from '../../../../../domain';
 import { ToolType } from '../drawing-canvas-tools.types';
 import { DrawingCanvasService } from '../drawing-canvas.service';
-import { HexColor } from '../../../../../domain';
+import { BrushSizeComponent } from './brush-size/brush-size.component';
 
 @Component({
-  imports: [IconComponent, SelectableIconButtonComponent, ColorPickerComponent],
+  imports: [
+    BrushSizeComponent,
+    IconComponent,
+    SliderComponent,
+    SelectableIconButtonComponent,
+    ColorPickerComponent,
+  ],
   selector: 'app-drawing-canvas-tools',
   templateUrl: './drawing-canvas-tools.component.html',
   styleUrl: './drawing-canvas-tools.component.scss',
