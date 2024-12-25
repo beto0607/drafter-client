@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { IconComponent } from '../../../../components';
-import { DrawingCanvasService } from '../../workspace/drawing-canvas';
+import { DrawingCanvasOpenerService } from '../../workspace/drawing-canvas';
 
 @Component({
   imports: [IconComponent],
@@ -9,9 +9,9 @@ import { DrawingCanvasService } from '../../workspace/drawing-canvas';
   styleUrl: './drawing-button.component.scss',
 })
 export class DrawingButtonComponent {
-  private drawingCanvasService = inject(DrawingCanvasService);
+  private drawingCanvasOpenerService = inject(DrawingCanvasOpenerService);
 
   onDrawingButtonClicked(): void {
-    this.drawingCanvasService.openDialog();
+    this.drawingCanvasOpenerService.openDialog();
   }
 }

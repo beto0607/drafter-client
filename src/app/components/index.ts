@@ -4,4 +4,5 @@ export * from './icon/icon.component';
 export * from './kebab-menu';
 export * from './logo/logo.component';
 export * from './pill/pill.component';
+export * from './selectable-icon-button';
 export * from './title-input/title-input.component';

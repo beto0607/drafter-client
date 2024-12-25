@@ -1,16 +1,23 @@
 dialog {
   width: 75vw;
   height: 75vh;
-  grid-template-columns: 1fr;
-  grid-template-rows: 75px 1fr 1fr 75px;
+  padding: 0;
+  grid-template-columns: 50px 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
 
   &[open] {
     display: grid;
   }
 
-  .header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+  canvas {
+    grid-column: 1/-1;
+    grid-row: 1/-1;
+    cursor: crosshair;
+  }
+
+  app-drawing-canvas-tools {
+    margin-right: auto;
+    grid-column: 1;
+    grid-row: 2;
   }
 }

@@ -1,0 +1,33 @@
+@let _currentTool = currentTool();
+<div class="drawing-tools">
+  <ul>
+    <li>
+      <app-selectable-icon-button [icon]="'faPencil'" [selected]="_currentTool==='pencil'"
+        (buttonClicked)="onSelectedTool('pencil')"
+      />
+    </li>
+    <li>
+      <app-selectable-icon-button [icon]="'faFillDrip'" [selected]="_currentTool==='fill'"
+        (buttonClicked)="onSelectedTool('fill')"
+      />
+    </li>
+    <li>
+      <app-selectable-icon-button [icon]="'faEraser'" [selected]="_currentTool==='eraser'"
+        (buttonClicked)="onSelectedTool('eraser')"
+      />
+    </li>
+    <li>
+      <app-color-picker
+        [currentColor]="currentColor()"
+        (colorSelected)="onColorSelected($event)"
+      />
+    </li>
+    <hr />
+    <li>
+      <app-icon [icon]="'faSave'"/>
+    </li>
+    <li>
+      <app-icon [icon]="'faRightFromBracket'"/>
+    </li>
+  </ul>
+</div>

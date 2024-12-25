@@ -4,7 +4,8 @@
   --ui-container-radius: 5px;
   --ui-element-bg: #fff;
   --ui-element-border-color: #777;
-  --ui-element-selected-border-color: #0000ff;
+  --ui-color-primary: #0000ff;
+  --ui-element-selected-border-color: var(--ui-color-primary);
 
   --ui-element-title-size: 12px;
 
