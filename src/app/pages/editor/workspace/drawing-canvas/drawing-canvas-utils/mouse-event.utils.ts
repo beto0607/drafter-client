@@ -5,8 +5,7 @@ export function getEventOffset(
   event: MouseEvent,
 ): IPosition {
   const { x, y } = canvas.getBoundingClientRect();
-  return {
-    x: event.x - x,
-    y: event.y - y,
-  };
+  const newX = Math.round(event.x - x);
+  const newY = Math.round(event.y - y);
+  return { x: newX, y: newY };
 }

@@ -7,6 +7,7 @@ import {
   updatePencilDrawing,
 } from './drawing-canvas-utils/drawing-pencil.utils';
 import { getEventOffset } from './drawing-canvas-utils';
+import { fillAreaFrom } from './drawing-canvas-utils/drawing-fill.utils';
 
 @Injectable()
 export class DrawingCanvasService {
@@ -60,6 +61,10 @@ export class DrawingCanvasService {
           currentColor,
           this.currentSize(),
         );
+        break;
+      }
+      case 'fill': {
+        fillAreaFrom(this.canvasCtx, eventPosition, currentColor);
         break;
       }
     }
