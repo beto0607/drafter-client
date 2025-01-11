@@ -3,7 +3,6 @@ import {
   ColorPickerComponent,
   IconComponent,
   SelectableIconButtonComponent,
-  SliderComponent,
 } from '../../../../../components';
 import { HexColor } from '../../../../../domain';
 import { ToolType } from '../drawing-canvas-tools.types';
@@ -14,7 +13,6 @@ import { BrushSizeComponent } from './brush-size/brush-size.component';
   imports: [
     BrushSizeComponent,
     IconComponent,
-    SliderComponent,
     SelectableIconButtonComponent,
     ColorPickerComponent,
   ],

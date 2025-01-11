@@ -1,33 +1,29 @@
-import { HexColor, IPosition } from '../../../../../domain';
+import { IPosition } from '../../../../../domain';
 
-export function startPencilDrawing(
+export function startEraserDrawing(
   canvasCtx: CanvasRenderingContext2D,
   event: IPosition,
-  color: HexColor,
   size: number,
 ): void {
-  canvasCtx.strokeStyle = color;
+  canvasCtx.globalCompositeOperation = 'destination-out';
   canvasCtx.lineWidth = size;
-  canvasCtx.lineCap = 'round';
+  canvasCtx.lineCap = 'square';
   canvasCtx.beginPath();
   canvasCtx.moveTo(event.x, event.y);
 }
-
-export function updatePencilDrawing(
+export function updateEraserDrawing(
   canvasCtx: CanvasRenderingContext2D,
   event: IPosition,
-  _color: HexColor,
 ): void {
   canvasCtx.lineTo(event.x, event.y);
   canvasCtx.stroke();
 }
-
-export function stopPencilDrawing(
+export function stopEraserDrawing(
   canvasCtx: CanvasRenderingContext2D,
   event: IPosition,
-  _color: HexColor,
 ): void {
   canvasCtx.moveTo(event.x, event.y);
   canvasCtx.stroke();
   canvasCtx.closePath();
+  canvasCtx.globalCompositeOperation = 'source-over';
 }

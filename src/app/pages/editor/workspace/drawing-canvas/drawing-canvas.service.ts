@@ -8,6 +8,11 @@ import {
 } from './drawing-canvas-utils/drawing-pencil.utils';
 import { getEventOffset } from './drawing-canvas-utils';
 import { fillAreaFrom } from './drawing-canvas-utils/drawing-fill.utils';
+import {
+  startEraserDrawing,
+  stopEraserDrawing,
+  updateEraserDrawing,
+} from './drawing-canvas-utils/drawing-eraser.utils';
 
 @Injectable()
 export class DrawingCanvasService {
@@ -53,14 +58,19 @@ export class DrawingCanvasService {
     this.isMouseDown = true;
     const eventPosition = getEventOffset(this.canvas, event);
     const currentColor = this.currentColor();
+    const currentSize = this.currentSize();
     switch (this.currentTool()) {
       case 'pencil': {
         startPencilDrawing(
           this.canvasCtx,
           eventPosition,
           currentColor,
-          this.currentSize(),
+          currentSize,
         );
+        break;
+      }
+      case 'eraser': {
+        startEraserDrawing(this.canvasCtx, eventPosition, currentSize);
         break;
       }
       case 'fill': {
@@ -82,6 +92,10 @@ export class DrawingCanvasService {
         stopPencilDrawing(this.canvasCtx, eventPosition, currentColor);
         break;
       }
+      case 'eraser': {
+        stopEraserDrawing(this.canvasCtx, eventPosition);
+        break;
+      }
     }
   }
 
@@ -94,6 +108,10 @@ export class DrawingCanvasService {
     switch (this.currentTool()) {
       case 'pencil': {
         updatePencilDrawing(this.canvasCtx, eventPosition, currentColor);
+        break;
+      }
+      case 'eraser': {
+        updateEraserDrawing(this.canvasCtx, eventPosition);
         break;
       }
     }
