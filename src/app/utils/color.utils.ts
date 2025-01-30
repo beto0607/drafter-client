@@ -28,6 +28,7 @@ export function areColorsEqual(a: Color, b: Color): boolean {
     a.red === b.red &&
     a.blue === b.blue &&
     a.green === b.green &&
-    a.alpha === b.alpha
+    // Consider alpha only when the difference is bigger than 50%
+    Math.abs(a.alpha - b.alpha) < 127
   );
 }
