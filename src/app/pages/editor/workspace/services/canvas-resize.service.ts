@@ -12,8 +12,7 @@ export class CanvasResizeService {
     targetElement: HTMLElement,
   ): void {
     const { width, height } = targetElement.getBoundingClientRect();
-    const padding = 6;
-    canvas.height = height - padding;
-    canvas.width = width - padding;
+    canvas.height = height;
+    canvas.width = width;
   }
 }

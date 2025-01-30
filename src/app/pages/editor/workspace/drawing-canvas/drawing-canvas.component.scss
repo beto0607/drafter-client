@@ -1,24 +1,32 @@
-dialog {
-  width: 75vw;
-  height: 75vh;
-  padding: 0;
-  grid-template-columns: 50px 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+:host {
+  --cursor-size: 12;
 
-  &[open] {
-    display: grid;
-  }
+  dialog {
+    width: 75vw;
+    height: 75vh;
+    padding: 0;
+    grid-template-columns: 50px 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    overflow: hidden;
 
-  canvas {
-    grid-column: 1/-1;
-    grid-row: 1/-1;
-    cursor: crosshair;
-  }
+    &[open] {
+      display: grid;
+    }
 
-  app-drawing-canvas-tools {
-    margin-right: auto;
-    grid-column: 1;
-    grid-row: 2;
-    z-index: 2;
+    canvas {
+      grid-column: 1/-1;
+      grid-row: 1/-1;
+
+      cursor:
+        url("/cursors/square-cursor.svg") 0 0,
+        crosshair;
+    }
+
+    app-drawing-canvas-tools {
+      margin-right: auto;
+      grid-column: 1;
+      grid-row: 2;
+      z-index: 2;
+    }
   }
 }

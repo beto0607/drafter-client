@@ -28,6 +28,8 @@ export class DrawingCanvasComponent implements AfterViewInit {
   private dialog = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
   private canvas = viewChild.required<ElementRef<HTMLCanvasElement>>('canvas');
 
+  brushSize = this.drawingCanvasService.currentSize;
+
   constructor() {
     this.drawingCanvasOpenerService.openDialog$
       .pipe(takeUntilDestroyed())
@@ -42,6 +44,7 @@ export class DrawingCanvasComponent implements AfterViewInit {
       }
       this.drawingCanvasService.setCanvas(canvas);
     });
+
     // TODO: remove this
     setTimeout(() => this.openDialog(), 1000);
   }

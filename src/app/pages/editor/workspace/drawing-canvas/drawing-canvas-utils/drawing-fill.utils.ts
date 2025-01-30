@@ -38,6 +38,15 @@ function _fillAreaFrom(
   originalColor: Color,
   targetColor: Color,
 ): void {
+  const currentColor = getColorIndicesForCoord(
+    imageData,
+    position.x,
+    position.y,
+    canvasCtx.canvas.width,
+  );
+  if (areColorsEqual(currentColor, targetColor)) {
+    return;
+  }
   const pixelStack: IPosition[] = [position];
 
   while (pixelStack.length) {
@@ -74,7 +83,7 @@ function _fillAreaFrom(
       const pixelPos = (newY * canvasCtx.canvas.width + x) * 4;
       colorPixel(imageData, pixelPos, targetColor);
 
-      if (x > 0) {
+      if (x >= 0) {
         const c = getColorIndicesForCoord(
           imageData,
           x - 1,
@@ -90,7 +99,7 @@ function _fillAreaFrom(
           reachLeft = false;
         }
       }
-      if (x < canvasCtx.canvas.width - 1) {
+      if (x <= canvasCtx.canvas.width) {
         const c = getColorIndicesForCoord(
           imageData,
           x + 1,
