@@ -1,0 +1,8 @@
+<button
+  [class.selected]="selected()"
+  (click)="onButtonClicked()"
+  (keyup.enter)="onButtonClicked()"
+  (keyup.space)="onButtonClicked()"
+>
+  <app-icon [icon]="icon()" />
+</button>

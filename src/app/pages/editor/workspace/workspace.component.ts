@@ -11,27 +11,28 @@ import {
 import { IElement, IPosition } from '../../../domain';
 import { WorkspaceStateService } from '../../../state/workspace';
 import { SetElementsPositionType } from '../../../state/workspace/workspace.actions.types';
+import { DrawingCanvasComponent } from './drawing-canvas';
 import { EditElementComponent } from './edit-element/edit-element.component';
 import { ElementComponent } from './element/element.component';
+import { CanvasResizeService } from './services';
 import {
   ELEMENT_MIN_HEIGHT,
   ELEMENT_MIN_WIDTH,
   RESIZE_ICON_SIZE,
 } from './workspace-drawer.constants';
 import { WorkspaceDrawerService } from './workspace-drawer.service';
-import { WorkspaceResizeService } from './workspace-resize.service';
 
 @Component({
   selector: 'app-workspace',
-  imports: [ElementComponent, EditElementComponent],
+  imports: [ElementComponent, EditElementComponent, DrawingCanvasComponent],
   templateUrl: './workspace.component.html',
   styleUrl: './workspace.component.scss',
-  providers: [WorkspaceResizeService, WorkspaceDrawerService],
+  providers: [CanvasResizeService, WorkspaceDrawerService],
 })
 export class WorkspaceComponent {
   private workspaceStateService = inject(WorkspaceStateService);
   private workspaceDrawerService = inject(WorkspaceDrawerService);
-  private workspaceResizeService = inject(WorkspaceResizeService);
+  private canvasResizeService = inject(CanvasResizeService);
 
   private canvas = viewChild.required<ElementRef<HTMLCanvasElement>>('canvas');
 
@@ -53,7 +54,7 @@ export class WorkspaceComponent {
       if (!canvas) {
         return;
       }
-      this.workspaceResizeService.updateCanvasSize(canvas.nativeElement);
+      this.canvasResizeService.updateCanvasSize(canvas.nativeElement);
       this.workspaceDrawerService.setCanvas(canvas.nativeElement);
     });
 
@@ -191,7 +192,7 @@ export class WorkspaceComponent {
   @HostListener('window:resize')
   private _onResizeWindow(): void {
     const canvas = this.canvas();
-    this.workspaceResizeService.updateCanvasSize(canvas.nativeElement);
+    this.canvasResizeService.updateCanvasSize(canvas.nativeElement);
     this.drawProject();
   }
 

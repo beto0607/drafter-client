@@ -1,0 +1,16 @@
+<button
+  [disabled]="isDisabled()"
+  (click)="onOpenSliderClicked()"
+  (keyup.space)="onOpenSliderClicked()"
+  (keyup.enter)="onOpenSliderClicked()"
+>
+  <app-icon [icon]="'faArrowsLeftRightToLine'"/>
+</button>
+
+<div popover #popover>
+  <app-slider [minValue]="1" [maxValue]="30"
+    [disabled]="isDisabled()"
+    [value]="currentSize()"
+    (valueChanged)="onPencilSizeChanged($event)"
+  />
+</div>

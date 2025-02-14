@@ -4,11 +4,13 @@
   --ui-container-radius: 5px;
   --ui-element-bg: #fff;
   --ui-element-border-color: #777;
-  --ui-element-selected-border-color: #0000ff;
+  --ui-color-primary: #0000ff;
+  --ui-element-selected-border-color: var(--ui-color-primary);
 
   --ui-element-title-size: 12px;
 
   --ui-outline-focus: 1px solid #888;
+  --ui-color-disabled: #888;
 
   --ui-border-radius-normal: 2px;
   --ui-border-normal: 1px solid var(--ui-element-border-color);

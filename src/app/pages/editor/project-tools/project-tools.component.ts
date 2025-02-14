@@ -3,10 +3,16 @@ import { IconComponent } from '../../../components';
 import { ColorPickerComponent } from '../../../components/color-picker/color-picker.component';
 import { HexColor } from '../../../domain';
 import { WorkspaceStateService } from '../../../state/workspace';
+import { DrawingButtonComponent } from './drawing-button/drawing-button.component';
 import { SaveButtonComponent } from './save-button/save-button.component';
 
 @Component({
-  imports: [IconComponent, ColorPickerComponent, SaveButtonComponent],
+  imports: [
+    IconComponent,
+    ColorPickerComponent,
+    SaveButtonComponent,
+    DrawingButtonComponent,
+  ],
   selector: 'app-project-tools',
   templateUrl: './project-tools.component.html',
   styleUrl: './project-tools.component.scss',

@@ -2,6 +2,7 @@ import {
   Component,
   contentChildren,
   ElementRef,
+  inject,
   viewChild,
 } from '@angular/core';
 import { IconComponent } from '../icon/icon.component';
@@ -14,9 +15,9 @@ import { KebabItemDirective } from './kebab-item.directive';
   styleUrl: './kebab-menu.component.scss',
 })
 export class KebabMenuComponent {
+  private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private content = contentChildren(KebabItemDirective);
 
-  private wrapper = viewChild.required<ElementRef<HTMLDivElement>>('wrapper');
   private popover = viewChild.required<ElementRef<HTMLDivElement>>('popover');
 
   onButtonClicked(): void {
@@ -34,11 +35,10 @@ export class KebabMenuComponent {
   private setPopoverPosition(): void {
     const innerHeight = window.innerHeight;
     const innerWidth = window.innerWidth;
-    const wrapper = this.wrapper().nativeElement;
     const popover = this.popover().nativeElement;
 
     const popoverRect = popover.getBoundingClientRect();
-    const { x, y } = wrapper.getBoundingClientRect();
+    const { x, y } = this.elementRef.nativeElement.getBoundingClientRect();
 
     if (x + popoverRect.width >= innerWidth) {
       popover.style.left = `${x - popoverRect.width}px`;

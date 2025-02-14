@@ -9,3 +9,10 @@ export interface WithId {
 }
 
 export type HexColor = `#${string}`;
+
+export interface Color {
+  red: number;
+  green: number;
+  blue: number;
+  alpha: number;
+}

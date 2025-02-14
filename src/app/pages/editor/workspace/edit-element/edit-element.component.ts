@@ -56,6 +56,7 @@ export class EditElementComponent {
 
     this.workspaceStateService.updateElementTitle(elementId, newTitle);
   }
+
   onCaptionUpdated(newCaption: string): void {
     const elementId = this.elementId();
     if (!elementId) {
@@ -66,23 +67,22 @@ export class EditElementComponent {
   }
 
   private showDialog(): void {
-    const dialogElement = this.dialogElement();
+    const dialogElement = this.dialogElement()?.nativeElement;
     if (!dialogElement) {
       return;
     }
-    dialogElement.nativeElement.showModal();
-    dialogElement.nativeElement.addEventListener('close', () => {
-      console.log('haaahahhhhh');
+    dialogElement.showModal();
+    dialogElement.addEventListener('close', () => {
       this.finishedEditing.emit();
     });
   }
 
   private closeDialog(): void {
-    const dialogElement = this.dialogElement();
+    const dialogElement = this.dialogElement()?.nativeElement;
     if (!dialogElement) {
       return;
     }
-    dialogElement.nativeElement.close();
+    dialogElement.close();
   }
 
   private computeElement(): IElement | undefined {

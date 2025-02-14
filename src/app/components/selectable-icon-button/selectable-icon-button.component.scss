@@ -1,0 +1,11 @@
+button {
+  background: transparent;
+  outline: none;
+  border: 1px solid transparent;
+  border-radius: var(--ui-border-radius-normal);
+  cursor: pointer;
+
+  &.selected {
+    border-color: var(--ui-color-primary);
+  }
+}

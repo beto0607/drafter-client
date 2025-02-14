@@ -1,0 +1,10 @@
+button {
+  outline: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  app-icon {
+    --ui-icon-color: #000;
+  }
+}
