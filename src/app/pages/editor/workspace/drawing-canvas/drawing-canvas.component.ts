@@ -44,9 +44,6 @@ export class DrawingCanvasComponent implements AfterViewInit {
       }
       this.drawingCanvasService.setCanvas(canvas);
     });
-
-    // TODO: remove this
-    setTimeout(() => this.openDialog(), 1000);
   }
 
   ngAfterViewInit(): void {
