@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IProject } from '../../domain';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class WorkspaceDataService {
   private readonly httpClient = inject(HttpClient);
 
-  private readonly API_URL = 'http://api.drafter.local';
+  private readonly API_URL = environment.origins.api;
 
   getProject(id: string): Observable<IProject> {
     const url = `${this.API_URL}/projects/${id}`;

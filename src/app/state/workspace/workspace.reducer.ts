@@ -33,13 +33,27 @@ export const WORKSPACE_FEATURE_KEY = 'workspace';
 
 export const reducer = createReducer<IWorkspaceState>(
   initialState,
-  on(WorkspaceAsyncActions.load, (state) => {
+  on(WorkspaceAsyncActions.load, WorkspaceAsyncActions.save, (state) => {
     return {
       ...state,
       loaded: false,
       error: undefined,
     };
   }),
+
+  on(
+    WorkspaceAsyncActions.saveFailure,
+    WorkspaceAsyncActions.loadFailure,
+    (state, { error }) => {
+      return {
+        ...state,
+        loaded: true,
+        error,
+        project: undefined,
+      };
+    },
+  ),
+
   on(WorkspaceAsyncActions.loadSuccess, (state, { project }) => {
     return {
       ...state,
@@ -48,12 +62,13 @@ export const reducer = createReducer<IWorkspaceState>(
       project,
     };
   }),
-  on(WorkspaceAsyncActions.loadFailure, (state, { error }) => {
+
+  on(WorkspaceAsyncActions.saveSuccess, (state, { project }) => {
     return {
       ...state,
       loaded: true,
-      error,
-      project: undefined,
+      error: undefined,
+      project,
     };
   }),
 

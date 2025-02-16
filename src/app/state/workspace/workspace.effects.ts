@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, of, switchMap } from 'rxjs';
+import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { getChecksum } from '../../utils';
 import {
   WorkspaceAsyncActions,
@@ -17,6 +18,8 @@ export class WorkspaceEffectsService {
   private actions$ = inject(Actions);
   private workspaceStateService = inject(WorkspaceStateService);
   private workspaceDataService = inject(WorkspaceDataService);
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
 
   loadProject$ = createEffect(() => {
     return this.actions$.pipe(
@@ -82,4 +85,20 @@ export class WorkspaceEffectsService {
       }),
     );
   });
+
+  updateUrl$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(WorkspaceAsyncActions.saveSuccess),
+        tap(({ project }) => {
+          const currentRouteId =
+            this.activatedRoute.firstChild?.snapshot.paramMap.get('id');
+          if (!currentRouteId) {
+            this.router.navigate(['editor', project.id], {});
+          }
+        }),
+      );
+    },
+    { dispatch: false },
+  );
 }
