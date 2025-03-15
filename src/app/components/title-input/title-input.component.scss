@@ -1,20 +1,24 @@
-.wrapper {
-  cursor: pointer;
+:host {
   width: 100%;
-  display: inline-flex;
 
-  span {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    display: inline-block;
-  }
-
-  input {
+  .wrapper {
+    cursor: pointer;
     width: 100%;
-  }
+    display: inline-flex;
 
-  app-icon {
-    margin-left: 8px;
+    span {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      display: inline-block;
+    }
+
+    input {
+      width: 100%;
+    }
+
+    app-icon {
+      margin-left: 8px;
+    }
   }
 }

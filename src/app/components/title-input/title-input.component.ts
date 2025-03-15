@@ -9,7 +9,7 @@ import { IconComponent } from '../icon/icon.component';
 })
 export class TitleInputComponent {
   value = input.required<string>();
-
+  showEditingIcon = input<boolean>(true);
   allowEmpty = input(false);
 
   valueChange = output<string>();

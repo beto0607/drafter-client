@@ -1,15 +1,17 @@
 import { Component, inject, input, output } from '@angular/core';
 import { IElement } from '../../../../domain';
 import { WorkspaceStateService } from '../../../../state/workspace';
+import { ElementCaptionComponent } from './element-caption/element-caption.component';
 import { ElementContentComponent } from './element-content/element-content.component';
 import { ElementFooterComponent } from './element-footer/element-footer.component';
 import { ElementTitleComponent } from './element-title/element-title.component';
 
 @Component({
   imports: [
-    ElementTitleComponent,
+    ElementCaptionComponent,
     ElementContentComponent,
     ElementFooterComponent,
+    ElementTitleComponent,
   ],
   selector: 'app-element',
   templateUrl: './element.component.html',

@@ -1,5 +1,7 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { TitleInputComponent } from '../../../../../components';
+import { WorkspaceStateService } from '../../../../../state/workspace';
+import { IElement } from '../../../../../domain';
 
 @Component({
   imports: [TitleInputComponent],
@@ -8,9 +10,11 @@ import { TitleInputComponent } from '../../../../../components';
   styleUrl: './element-title.component.scss',
 })
 export class ElementTitleComponent {
-  elementTitle = input.required<string>();
+  private workspaceStateService = inject(WorkspaceStateService);
+  element = input.required<IElement>();
+  elementTitle = computed(() => this.element().title);
 
   onTitleChanged(newValue: string): void {
-    console.log(newValue);
+    this.workspaceStateService.updateElementTitle(this.element().id, newValue);
   }
 }

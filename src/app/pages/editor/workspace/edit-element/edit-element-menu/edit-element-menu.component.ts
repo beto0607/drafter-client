@@ -32,7 +32,6 @@ export class EditElementMenuComponent {
   constructor() {
     effect(() => {
       const _elements = this.workspaceStateService.elements();
-      console.log(this.menu());
       this.menu().close();
     });
   }
