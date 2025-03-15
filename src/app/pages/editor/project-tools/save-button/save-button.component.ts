@@ -1,9 +1,10 @@
 import { Component, computed, inject } from '@angular/core';
 import { IconComponent } from '../../../../components';
 import { WorkspaceStateService } from '../../../../state/workspace';
+import { TooltipDirective } from '../../../../directives/tooltip.directive';
 
 @Component({
-  imports: [IconComponent],
+  imports: [IconComponent, TooltipDirective],
   selector: 'app-save-button',
   templateUrl: './save-button.component.html',
   styleUrl: './save-button.component.scss',
