@@ -61,7 +61,13 @@ export class ElementComponent {
     );
   }
 
-  onElementDoubleClicked(): void {
+  onElementDoubleClicked(mouseEvent: MouseEvent): void {
+    const shouldSkip = !!(mouseEvent.target as HTMLElement)?.closest(
+      'button,input',
+    );
+    if (shouldSkip) {
+      return;
+    }
     this.editElement.emit();
   }
 }
